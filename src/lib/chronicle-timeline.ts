@@ -154,13 +154,27 @@ export function getHoverRange(
       siblings.reduce((earliest, current) =>
         eventTimestamp(current) < eventTimestamp(earliest) ? current : earliest
       );
-    const end = siblings.find((e) => e.status === "end");
+    const end =
+      siblings.find((e) => e.status === "end") ??
+      siblings.reduce((latest, current) =>
+        eventTimestamp(current) > eventTimestamp(latest) ? current : latest
+      );
 
     const start = formatMonthYear(beginning.month, beginning.year);
-    if (end) {
+
+    if (event.status === "beginning") {
+      return start;
+    }
+
+    if (event.status === "end") {
       return `${start} — ${formatMonthYear(end.month, end.year)}`;
     }
-    return `${start} — Present`;
+
+    if (eventTimestamp(end) > eventTimestamp(beginning)) {
+      return `${start} — ${formatMonthYear(end.month, end.year)}`;
+    }
+
+    return start;
   }
 
   const point = formatMonthYear(event.month, event.year);

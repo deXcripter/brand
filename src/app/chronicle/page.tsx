@@ -16,10 +16,12 @@ const timelineData: TimelineEvent[] = [
     title: "Software Engineer",
     at: "@ SEORCE",
     description:
-     `
-     <p>Before SEORCE, I was deep into crypto. Messing with smart contracts, doing some audits, that was where my head was at.</p>
+    `
+    <p>Before SEORCE, I was deep into crypto. Messing with smart contracts, doing some audits, that was where my head was at.</p>
 <p>When I got the offer, I wasn't excited about it. It paid the bills though, so I took it. My plan was to stay till December then leave. The team moved fast, we pushed hard almost every day, and I didn't think I'd last much longer than that.</p>
-<p>Somewhere in there things shifted. Building SEO tools meant learning how a lot of stuff worked under the hood, and I actually started enjoying it. December came and went and I was still there. Turns out I wasn't in as much of a rush to leave as I thought. Still figuring myself out anyway, so why not stick around and keep learning.</p>`
+<p>Somewhere in there things shifted. Building SEO tools meant learning how a lot of stuff worked under the hood, and I actually started enjoying it. December came and went and I was still there.</p>
+<p>This ended up being the turning point. I stopped thinking of it as something to push through and started going all in on SEO. Still figuring myself out in a lot of ways, but this was the first time I felt sure about a direction.</p>
+`
   },
   {
     year: "2025",
@@ -39,24 +41,24 @@ const timelineData: TimelineEvent[] = [
     at: "@ myBigshelf",
     description: `<p>
       <a href='https://mybigshelf.com' target='_blank' rel='noopener noreferrer'>myBigshelf</a> is a platform for book lovers to discover and share their favorite books.</p>
-      <p>This was my frist experience working with a team of developers, and we were all students at the time. I was responsible for the backend of the platform, and I had to learn a lot about the different technologies that will be used to build the platform.</p>`,
+      <p>My frist experience working with a team of developers, and we were all students at the time. I was responsible for the backend of the platform, and I had to learn a lot about the different technologies that will be used to build the platform.</p>`,
   },
   {
     year: "2023",
     month: "Sep",
     title: "Internship",
     at: "@ Promild Tech Limited",
-    description: `<p>On paper, I was an intern at Promild Tech Limited. This was my school's internship program supposed to last 6 months. However, i quickly realised i wasnt being challenged, so i left and focused on self learning.</p>
-      <p>During this period, i learnt a lot about JavaScript, React, Node.js, MongoDB and other related web technologies. I also got to build a Todo application which i never got to complete because by the time i started working on it, my internship period was coming to an end. This project would also be the reason i got my first shot as a developer at <strong>Bigshelf</strong>.</p>`,
+    description: `<p>On paper, I was an intern at Promild Tech Limited, a 6-month program through school. In reality, I wasn't being challenged, so I left early and focused on self learning instead.</p>
+      <p>During this period, I learned a lot about JavaScript, React, Node.js, MongoDB and other related web technologies. I also built a CRUD application, though I never finished it since my internship period ended before I could. Still, that project ended up being the reason I got my first shot as a developer at <strong>Bigshelf</strong>.</p>`,
   },
   {
-    year: "2020",
-    month: "Sep",
+    year: "2021",
+    month: "May",
     title: "Started university",
     group: "university",
     status: "beginning",
     description:
-      "<p>Entered university, learned fundamentals, and discovered I loved building things with code.</p>",
+    "<p>Always been a fan of computers, grew up playing a lot of PC games.</p><p>That got me interested, so I applied for computer science and got into the university. My story starts..</p>",
   },
 ];
 
@@ -89,7 +91,9 @@ export default function ChroniclePage() {
                 key={year}
                 data-year={year}
                 style={{
-                  marginTop: gapBeforePx ? `${gapBeforePx}px` : undefined,
+                  marginTop: gapBeforePx
+                    ? `calc(${gapBeforePx}px * var(--chronicle-gap-scale, 1))`
+                    : undefined,
                 }}
               >
                 {entries.map(({ event: entry, index: idx, marginTopPx }) => {
@@ -120,9 +124,14 @@ export default function ChroniclePage() {
                             aria-expanded={isOpen}
                             onClick={() => setOpenIndex(isOpen ? null : idx)}
                           >
-                            <span className="chronicle-event__title">
-                              {entry.title}{" "}
-                              {entry.at ? <span>{entry.at}</span> : null}
+                            <span className="chronicle-event__heading">
+                              <span className="chronicle-event__title">
+                                {entry.title}{" "}
+                                {entry.at ? <span>{entry.at}</span> : null}
+                              </span>
+                              <span className="chronicle-event__meta mono">
+                                {dateRange}
+                              </span>
                             </span>
                             <svg
                               className="chronicle-event__chevron"
