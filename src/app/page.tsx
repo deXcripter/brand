@@ -19,10 +19,10 @@ export default function Home() {
           <p className="hero__sub mono">
             software engineer&nbsp;&nbsp;·&nbsp;&nbsp;studying seo in
             public&nbsp;&nbsp;·&nbsp;&nbsp;building{" "}
-            <Link href="/work">dexcripter</Link>
+            <Link href="/chronicle">dexcripter</Link>
           </p>
           <div className="hero__cta">
-            <Link href="/work" className="btn btn--primary">
+            <Link href="/chronicle" className="btn btn--primary">
               See what I&apos;m building
             </Link>
             <Link href="#connect" className="btn btn--ghost">
@@ -100,11 +100,11 @@ export default function Home() {
             </li>
           </ul>
           <Link
-            href="/work"
+            href="/chronicle"
             className="btn btn--ghost"
             style={{ marginTop: "var(--space-4)" }}
           >
-            See all projects →
+            See full chronicle →
           </Link>
         </div>
       </section>
