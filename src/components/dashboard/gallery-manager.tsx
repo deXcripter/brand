@@ -12,6 +12,8 @@ import {
 } from "@/lib/gallery";
 import {
   formatGalleryGroup,
+  formatMonthLabel,
+  galleryDateToISO,
   getDefaultGalleryDate,
   parseGalleryGroup,
   type GalleryDateValue,
@@ -41,9 +43,10 @@ export default function GalleryManager() {
   const grouped = useMemo(() => {
     const map = new Map<string, GalleryImage[]>();
     for (const image of images) {
-      const bucket = map.get(image.month) ?? [];
+      const label = formatMonthLabel(new Date(image.date));
+      const bucket = map.get(label) ?? [];
       bucket.push(image);
-      map.set(image.month, bucket);
+      map.set(label, bucket);
     }
     return Array.from(map.entries());
   }, [images]);
@@ -65,7 +68,7 @@ export default function GalleryManager() {
           full: url,
           alt,
           caption: alt,
-          month: uploadGroup,
+          date: galleryDateToISO(uploadDate),
         });
         setImages((current) => [image, ...current]);
       }
@@ -200,16 +203,16 @@ function GalleryImageCard({
   onDelete: (id: string) => Promise<void>;
 }) {
   const [date, setDate] = useState<GalleryDateValue>(() =>
-    parseGalleryGroup(image.month)
+    parseGalleryGroup(formatMonthLabel(new Date(image.date)))
   );
 
   useEffect(() => {
-    setDate(parseGalleryGroup(image.month));
-  }, [image.month]);
+    setDate(parseGalleryGroup(formatMonthLabel(new Date(image.date))));
+  }, [image.date]);
 
   function handleDateChange(next: GalleryDateValue) {
     setDate(next);
-    void onSave(image.id, { month: formatGalleryGroup(next) });
+    void onSave(image.id, { date: galleryDateToISO(next) });
   }
 
   return (

@@ -1,3 +1,5 @@
+import { formatMonthLabel } from "./gallery-date";
+
 export const GALLERY_MONTHS = [
   "January",
   "February",
@@ -18,6 +20,26 @@ export type GalleryDateValue = {
   year: number;
   day: number | null;
 };
+
+/** Convert a Date to a "Month YYYY" label (e.g. "June 2026"). */
+export function formatMonthLabel(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+}
+
+/** Convert a GalleryDateValue to an ISO 8601 date string. */
+export function galleryDateToISO({
+  monthIndex,
+  year,
+  day,
+}: GalleryDateValue): string {
+  const d = day ?? 1;
+  const month = String(monthIndex + 1).padStart(2, "0");
+  const dayStr = String(d).padStart(2, "0");
+  return `${year}-${month}-${dayStr}T00:00:00.000Z`;
+}
 
 export function formatGalleryGroup({
   monthIndex,

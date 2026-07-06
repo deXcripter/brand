@@ -11,7 +11,7 @@ export interface BlogPost {
 
 export interface GalleryImage {
   id: string;
-  month: string;
+  date: string;
   src: string;
   full: string;
   alt: string;
@@ -58,11 +58,11 @@ export type CreateGalleryImageInput = {
   full?: string;
   alt: string;
   caption: string;
-  month: string;
+  date: string;
   wide?: boolean;
   tall?: boolean;
 };
 
 export type UpdateGalleryImageInput = Partial<
-  Pick<GalleryImage, "alt" | "caption" | "month" | "wide" | "tall">
+  Pick<GalleryImage, "alt" | "caption" | "date" | "wide" | "tall">
 >;

@@ -6,6 +6,7 @@ import type {
   UpdateGalleryImageInput,
   UploadResponse,
 } from "@/lib/types";
+import { formatMonthLabel } from "@/lib/gallery-date";
 
 export type { GalleryImage, GalleryGroup } from "@/lib/types";
 
@@ -13,9 +14,10 @@ function groupImages(images: GalleryImage[]): GalleryGroup[] {
   const grouped = new Map<string, GalleryImage[]>();
 
   for (const image of images) {
-    const bucket = grouped.get(image.month) ?? [];
+    const label = formatMonthLabel(new Date(image.date));
+    const bucket = grouped.get(label) ?? [];
     bucket.push(image);
-    grouped.set(image.month, bucket);
+    grouped.set(label, bucket);
   }
 
   return Array.from(grouped.entries()).map(([month, monthImages]) => ({

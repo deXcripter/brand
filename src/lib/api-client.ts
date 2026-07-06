@@ -71,7 +71,7 @@ export async function serverApiFetch<T>(path: string): Promise<T> {
 
   try {
     const response = await fetch(`${getApiUrl()}${path}`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 10 },
       signal: controller.signal,
     });
 
