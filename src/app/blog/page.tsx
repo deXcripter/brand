@@ -4,7 +4,12 @@ import { getAllPosts } from "@/lib/posts";
 export const dynamic = "force-dynamic";
 
 export default async function BlogPage() {
-  const posts = await getAllPosts();
+  let posts: Awaited<ReturnType<typeof getAllPosts>> = [];
+  try {
+    posts = await getAllPosts();
+  } catch {
+    // API unreachable — render empty list
+  }
 
   return (
     <>

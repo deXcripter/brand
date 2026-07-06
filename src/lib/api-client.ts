@@ -1,10 +1,11 @@
 import type { ApiError } from "@/lib/types";
 
 export function getApiUrl(): string {
-  const url = process.env.NEXT_PUBLIC_API_URL + "/api";
-  if (!url) {
+  const base = process.env.NEXT_PUBLIC_API_URL;
+  if (!base) {
     throw new Error("NEXT_PUBLIC_API_URL is not configured");
   }
+  const url = base + "/api";
   return url.replace(/\/$/, "");
 }
 
@@ -65,13 +66,21 @@ export async function apiFetch<T>(
 }
 
 export async function serverApiFetch<T>(path: string): Promise<T> {
-  const response = await fetch(`${getApiUrl()}${path}`, {
-    next: { revalidate: 60 },
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
 
-  if (!response.ok) {
-    throw new Error(`Request failed (${response.status})`);
+  try {
+    const response = await fetch(`${getApiUrl()}${path}`, {
+      next: { revalidate: 60 },
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed (${response.status})`);
+    }
+
+    return (await response.json()) as T;
+  } finally {
+    clearTimeout(timeout);
   }
-
-  return (await response.json()) as T;
 }

@@ -5,7 +5,12 @@ import { getAllPosts } from "@/lib/posts";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const latestPosts = (await getAllPosts()).slice(0, 3);
+  let latestPosts: Awaited<ReturnType<typeof getAllPosts>> = [];
+  try {
+    latestPosts = (await getAllPosts()).slice(0, 3);
+  } catch {
+    // API unreachable — render without blog preview
+  }
 
   return (
     <>

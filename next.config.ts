@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const apiBase = (
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api"
+  process.env.NEXT_PUBLIC_API_URL || ""
 ).replace(/\/api$/, "");
 
 const nextConfig: NextConfig = {

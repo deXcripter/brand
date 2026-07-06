@@ -4,7 +4,12 @@ import GalleryView from "@/components/gallery-view";
 export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
-  const groups = await getGalleryGroups();
+  let groups: Awaited<ReturnType<typeof getGalleryGroups>> = [];
+  try {
+    groups = await getGalleryGroups();
+  } catch {
+    // API unreachable — render empty gallery
+  }
 
   return (
     <>
