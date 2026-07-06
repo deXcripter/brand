@@ -1,26 +1,88 @@
 "use client";
 
-import { useState } from "react";
-import type { GalleryGroup } from "@/lib/gallery";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { GalleryImage } from "@/lib/gallery";
+import { fetchGalleryBatch } from "@/lib/gallery";
+import { formatMonthLabel } from "@/lib/gallery-date";
 import { resolveMediaUrl } from "@/lib/media-url";
 
-export default function GalleryView({ groups }: { groups: GalleryGroup[] }) {
+function groupImages(images: GalleryImage[]): Map<string, GalleryImage[]> {
+  const map = new Map<string, GalleryImage[]>();
+  for (const img of images) {
+    const label = formatMonthLabel(new Date(img.date));
+    const bucket = map.get(label) ?? [];
+    bucket.push(img);
+    map.set(label, bucket);
+  }
+  return map;
+}
+
+export default function GalleryView({
+  initialImages,
+  initialHasMore,
+}: {
+  initialImages: GalleryImage[];
+  initialHasMore: boolean;
+}) {
+  const [images, setImages] = useState<GalleryImage[]>(initialImages);
+  const [hasMore, setHasMore] = useState(initialHasMore);
+  const [loading, setLoading] = useState(false);
   const [lightbox, setLightbox] = useState<{
     src: string;
     caption: string;
     alt: string;
   } | null>(null);
 
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const loadingRef = useRef(false);
+
   const close = () => setLightbox(null);
+
+  const loadMore = useCallback(async () => {
+    if (loadingRef.current || !hasMore) return;
+    loadingRef.current = true;
+    setLoading(true);
+
+    try {
+      const last = images[images.length - 1];
+      const batch = await fetchGalleryBatch(last?.date, last?.id);
+      setImages((prev) => [...prev, ...batch.images]);
+      setHasMore(batch.hasMore);
+    } catch {
+      // silently fail — user can scroll back up and down to retry
+    } finally {
+      loadingRef.current = false;
+      setLoading(false);
+    }
+  }, [hasMore, images]);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          void loadMore();
+        }
+      },
+      { rootMargin: "400px" }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [loadMore]);
+
+  const groups = groupImages(images);
 
   return (
     <>
       <section className="timeline section__inner">
-        {groups.map((group) => (
-          <div className="timeline__group" key={group.month}>
-            <h2 className="timeline__date mono">{group.month}</h2>
+        {Array.from(groups.entries()).map(([month, monthImages]) => (
+          <div className="timeline__group" key={month}>
+            <h2 className="timeline__date mono">{month}</h2>
             <div className="gallery-grid">
-              {group.images.map((img) => (
+              {monthImages.map((img) => (
                 <button
                   key={img.id}
                   className={`gallery-item${img.wide ? " gallery-item--wide" : ""}${img.tall ? " gallery-item--tall" : ""}`}
@@ -39,6 +101,17 @@ export default function GalleryView({ groups }: { groups: GalleryGroup[] }) {
             </div>
           </div>
         ))}
+
+        {/* Sentinel for infinite scroll */}
+        <div ref={sentinelRef} className="gallery-sentinel" />
+
+        {loading && (
+          <p className="gallery-loading mono">Loading more…</p>
+        )}
+
+        {!hasMore && images.length > 0 && (
+          <p className="gallery-end mono">That&rsquo;s everything for now.</p>
+        )}
       </section>
 
       <div

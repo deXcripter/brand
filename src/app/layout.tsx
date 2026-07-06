@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import SiteChrome from "@/components/site-chrome";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,6 +40,12 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
+        />
+
+        <Script
+          src="https://cdn.exeolabs.xyz/script.js"
+          strategy="afterInteractive"
+          data-site="f97bff69-c312-48c2-93c4-a3cfb81b3a5c"
         />
       </head>
       <body>

@@ -25,6 +25,11 @@ export interface GalleryGroup {
   images: GalleryImage[];
 }
 
+export interface PaginatedGalleryResponse {
+  images: GalleryImage[];
+  hasMore: boolean;
+}
+
 export interface AuthLoginResponse {
   success: boolean;
 }

@@ -616,6 +616,14 @@ ul { list-style: none; margin: 0; padding: 0; }
   padding-bottom: var(--space-1);
   border-bottom: 1px solid var(--border);
 }
+.gallery-sentinel { height: 1px; }
+.gallery-loading,
+.gallery-end {
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  padding: var(--space-4) 0;
+}
 
 /* ============================================
    CHRONICLE TIMELINE (vertical scroll)

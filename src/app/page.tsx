@@ -63,7 +63,7 @@ export default async function Home() {
             <p>
 
 
-              No credentials. No decade of experience. Just building in public and getting less wrong every week.
+             No decade of experience. Just building in public and getting less wrong every week.
             </p>
           </div>
         </div>

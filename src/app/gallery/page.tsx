@@ -1,12 +1,16 @@
-import { getGalleryGroups } from "@/lib/gallery";
+import { fetchGalleryBatch, type GalleryImage } from "@/lib/gallery";
 import GalleryView from "@/components/gallery-view";
 
 export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
-  let groups: Awaited<ReturnType<typeof getGalleryGroups>> = [];
+  let images: GalleryImage[] = [];
+  let hasMore = false;
+
   try {
-    groups = await getGalleryGroups();
+    const batch = await fetchGalleryBatch();
+    images = batch.images;
+    hasMore = batch.hasMore;
   } catch {
     // API unreachable — render empty gallery
   }
@@ -23,7 +27,7 @@ export default async function GalleryPage() {
         </div>
       </section>
 
-      <GalleryView groups={groups} />
+      <GalleryView initialImages={images} initialHasMore={hasMore} />
     </>
   );
 }

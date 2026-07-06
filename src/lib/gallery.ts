@@ -1,14 +1,15 @@
-import { apiFetch, serverApiFetch } from "@/lib/api-client";
+import { apiFetch, getApiUrl, serverApiFetch } from "@/lib/api-client";
 import type {
   CreateGalleryImageInput,
   GalleryGroup,
   GalleryImage,
+  PaginatedGalleryResponse,
   UpdateGalleryImageInput,
   UploadResponse,
 } from "@/lib/types";
 import { formatMonthLabel } from "@/lib/gallery-date";
 
-export type { GalleryImage, GalleryGroup } from "@/lib/types";
+export type { GalleryImage, GalleryGroup, PaginatedGalleryResponse } from "@/lib/types";
 
 function groupImages(images: GalleryImage[]): GalleryGroup[] {
   const grouped = new Map<string, GalleryImage[]>();
@@ -27,8 +28,24 @@ function groupImages(images: GalleryImage[]): GalleryGroup[] {
 }
 
 export async function getGalleryGroups(): Promise<GalleryGroup[]> {
-  const images = await serverApiFetch<GalleryImage[]>("/gallery");
-  return groupImages(images);
+  const data = await serverApiFetch<PaginatedGalleryResponse>("/gallery");
+  return groupImages(data.images);
+}
+
+/** Fetch the next page of gallery images (client-side, cursor-based). */
+export async function fetchGalleryBatch(
+  cursorDate?: string,
+  cursorId?: string
+): Promise<PaginatedGalleryResponse> {
+  const params = new URLSearchParams();
+  if (cursorDate) params.set("cursorDate", cursorDate);
+  if (cursorId) params.set("cursorId", cursorId);
+
+  const qs = params.toString();
+  const url = `${getApiUrl()}/gallery${qs ? `?${qs}` : ""}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Request failed (${res.status})`);
+  return (await res.json()) as PaginatedGalleryResponse;
 }
 
 export async function getAdminGalleryImages(): Promise<GalleryImage[]> {
