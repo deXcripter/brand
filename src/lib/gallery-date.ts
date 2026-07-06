@@ -1,5 +1,3 @@
-import { formatMonthLabel } from "./gallery-date";
-
 export const GALLERY_MONTHS = [
   "January",
   "February",
