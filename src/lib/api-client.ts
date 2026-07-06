@@ -1,7 +1,7 @@
 import type { ApiError } from "@/lib/types";
 
 export function getApiUrl(): string {
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.NEXT_PUBLIC_API_URL + "/api";
   if (!url) {
     throw new Error("NEXT_PUBLIC_API_URL is not configured");
   }
