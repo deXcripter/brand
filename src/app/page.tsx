@@ -2,8 +2,10 @@ import Link from "next/link";
 import Typewriter from "@/components/typewriter";
 import { getAllPosts } from "@/lib/posts";
 
-export default function Home() {
-  const latestPosts = getAllPosts().slice(0, 3);
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const latestPosts = (await getAllPosts()).slice(0, 3);
 
   return (
     <>
@@ -43,21 +45,20 @@ export default function Home() {
             I&apos;m not an SEO expert. I&apos;m a student of it.
           </h2>
           <div className="about__body">
+
+
             <p>
-              I&apos;m a software engineer who got curious about how search
-              actually works, and then became fascinated by how AI is completely
-              rewriting the rules of being found online.
+              I'm a software engineer. Got curious about how search actually works one day, then got obsessed with how AI is flipping the whole thing upside down.
             </p>
             <p>
-              So I&apos;m learning SEO the way I learn anything: in public, by
-              building things. Right now, that means writing code at the
-              intersection of language models and search. I build tools that
-              help brands understand and improve how they rank, both today and
-              in an AI-first web.
+
+
+              So now I'm learning SEO the way I learn everything: in public, by building stuff. Right now that's writing code where language models meet search, building tools that help brands figure out how they rank, today and in a web where AI answers most of the questions.
             </p>
             <p>
-              No credentials or decade of experience. Just learning in public,
-              shipping tools, and getting less wrong every week.
+
+
+              No credentials. No decade of experience. Just building in public and getting less wrong every week.
             </p>
           </div>
         </div>
@@ -110,29 +111,35 @@ export default function Home() {
       </section>
 
       {/* BLOG PREVIEW */}
-      <section id="blog" className="section">
-        <div className="section__inner">
-          <p className="eyebrow mono">// blog</p>
-          <h2 className="section__title">Latest from the blog</h2>
-          <div className="blog-grid">
-            {latestPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="blog-card"
-              >
-                <span className="blog-card__date mono">{post.date}</span>
-                <h3>{post.title}</h3>
-                <p>{post.subtitle}</p>
-                <span className="blog-card__link mono">read post →</span>
-              </Link>
-            ))}
+
+      {latestPosts.length > 0 && (
+        <section id="blog" className="section">
+
+
+
+          <div className="section__inner">
+            <p className="eyebrow mono">// blog</p>
+            <h2 className="section__title">Latest from the blog</h2>
+            <div className="blog-grid">
+              {latestPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="blog-card"
+                >
+                  <span className="blog-card__date mono">{post.date}</span>
+                  <h3>{post.title}</h3>
+                  <p>{post.subtitle}</p>
+                  <span className="blog-card__link mono">read post →</span>
+                </Link>
+              ))}
+            </div>
+            <Link href="/blog" className="btn btn--ghost blog-grid__cta">
+              See all posts
+            </Link>
           </div>
-          <Link href="/blog" className="btn btn--ghost blog-grid__cta">
-            See all posts
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CONNECT */}
       <section id="connect" className="section section--alt">

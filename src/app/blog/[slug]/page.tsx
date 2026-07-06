@@ -1,14 +1,9 @@
 import Link from "next/link";
 import { getPost } from "@/lib/posts";
+import { getPostContent } from "@/lib/blog-content";
+import BlogContent from "@/components/blog-content";
 
-export function generateStaticParams() {
-  return [
-    { slug: "learning-seo" },
-    { slug: "ai-search" },
-    { slug: "dexcripter-month-one" },
-    { slug: "crawl-budget" },
-  ];
-}
+export const dynamic = "force-dynamic";
 
 export default async function BlogPostPage({
   params,
@@ -16,7 +11,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
 
   if (!post) {
     return (
@@ -40,16 +35,14 @@ export default async function BlogPostPage({
       <h1 className="blog-post__title">{post.title}</h1>
       <p className="blog-post__subtitle">{post.subtitle}</p>
 
-      <div className="blog-post__body">
-        {post.body.map((paragraph, i) => (
-          <p key={i} dangerouslySetInnerHTML={{ __html: paragraph }} />
-        ))}
-      </div>
+      <BlogContent html={getPostContent(post)} className="blog-post__body" />
 
-      <p
-        className="blog-post__tags mono"
-        dangerouslySetInnerHTML={{ __html: post.tags }}
-      />
+      {post.tags ? (
+        <p
+          className="blog-post__tags mono"
+          dangerouslySetInnerHTML={{ __html: post.tags }}
+        />
+      ) : null}
     </article>
   );
 }

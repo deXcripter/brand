@@ -1,0 +1,93 @@
+[
+  {
+    "id": "img-1015",
+    "month": "June 2026",
+    "src": "https://picsum.photos/id/1015/500/500",
+    "full": "https://picsum.photos/id/1015/1200/900",
+    "alt": "Riverside, golden hour",
+    "caption": "Riverside, golden hour"
+  },
+  {
+    "id": "img-1016",
+    "month": "June 2026",
+    "src": "https://picsum.photos/id/1016/500/700",
+    "full": "https://picsum.photos/id/1016/900/1300",
+    "alt": "Mountain trail",
+    "caption": "Mountain trail",
+    "tall": true
+  },
+  {
+    "id": "img-1018",
+    "month": "June 2026",
+    "src": "https://picsum.photos/id/1018/500/500",
+    "full": "https://picsum.photos/id/1018/1200/900",
+    "alt": "Open road",
+    "caption": "Open road"
+  },
+  {
+    "id": "img-1019",
+    "month": "June 2026",
+    "src": "https://picsum.photos/id/1019/500/500",
+    "full": "https://picsum.photos/id/1019/1200/900",
+    "alt": "Workspace, late night",
+    "caption": "Workspace, late night"
+  },
+  {
+    "id": "img-1021",
+    "month": "May 2026",
+    "src": "https://picsum.photos/id/1021/700/500",
+    "full": "https://picsum.photos/id/1021/1400/900",
+    "alt": "City skyline",
+    "caption": "City skyline",
+    "wide": true
+  },
+  {
+    "id": "img-1024",
+    "month": "May 2026",
+    "src": "https://picsum.photos/id/1024/500/500",
+    "full": "https://picsum.photos/id/1024/1200/900",
+    "alt": "Coffee and code",
+    "caption": "Coffee & code"
+  },
+  {
+    "id": "img-1025",
+    "month": "May 2026",
+    "src": "https://picsum.photos/id/1025/500/500",
+    "full": "https://picsum.photos/id/1025/1200/900",
+    "alt": "Quiet street",
+    "caption": "Quiet street"
+  },
+  {
+    "id": "img-1035",
+    "month": "April 2026",
+    "src": "https://picsum.photos/id/1035/500/500",
+    "full": "https://picsum.photos/id/1035/1200/900",
+    "alt": "Forest light",
+    "caption": "Forest light"
+  },
+  {
+    "id": "img-1041",
+    "month": "April 2026",
+    "src": "https://picsum.photos/id/1041/500/700",
+    "full": "https://picsum.photos/id/1041/900/1300",
+    "alt": "Old bridge",
+    "caption": "Old bridge",
+    "tall": true
+  },
+  {
+    "id": "img-1043",
+    "month": "April 2026",
+    "src": "https://picsum.photos/id/1043/500/500",
+    "full": "https://picsum.photos/id/1043/1200/900",
+    "alt": "Desk setup",
+    "caption": "Desk setup"
+  },
+  {
+    "id": "img-1050",
+    "month": "April 2026",
+    "src": "https://picsum.photos/id/1050/500/500",
+    "full": "https://picsum.photos/id/1050/1200/900",
+    "alt": "Morning walk",
+    "caption": "Morning walk"
+  }
+]

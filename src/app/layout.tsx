@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Nav from "@/components/nav";
-import Footer from "@/components/footer";
+import SiteChrome from "@/components/site-chrome";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,9 +43,9 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
-          <Nav />
-          <main>{children}</main>
-          <Footer />
+          <SiteChrome>
+            <main>{children}</main>
+          </SiteChrome>
         </ThemeProvider>
       </body>
     </html>
