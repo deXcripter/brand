@@ -42,6 +42,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
 
+          <Script src="https://cloud.umami.is/script.js" data-website-id="7c2c13ef-0008-45b0-ac24-9be025ce80ba" />
+
+
         <Script
           src="https://cdn.exeolabs.xyz/script.js"
           strategy="afterInteractive"
