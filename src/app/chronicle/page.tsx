@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import {
   buildChronicleTimeline,
@@ -15,13 +12,12 @@ const timelineData: TimelineEvent[] = [
     month: "Jul",
     title: "Software Engineer",
     at: "@ SEORCE",
-    description:
-    `
+    description: `
     <p>Before SEORCE, I was deep into crypto. Messing with smart contracts, doing some audits, that was where my head was at.</p>
 <p>When I got the offer, I wasn't excited about it. It paid the bills though, so I took it. My plan was to stay till December then leave. The team moved fast, we pushed hard almost every day, and I didn't think I'd last much longer than that.</p>
 <p>Somewhere in there things shifted. Building SEO tools meant learning how a lot of stuff worked under the hood, and I actually started enjoying it. December came and went and I was still there.</p>
 <p>This ended up being the turning point. I stopped thinking of it as something to push through and started going all in on SEO. Still figuring myself out in a lot of ways, but this was the first time I felt sure about a direction.</p>
-`
+`,
   },
   {
     year: "2025",
@@ -58,12 +54,11 @@ const timelineData: TimelineEvent[] = [
     group: "university",
     status: "beginning",
     description:
-    "<p>Always been a fan of computers, grew up playing a lot of PC games.</p><p>That got me interested, so I applied for computer science and got into the university. My story starts..</p>",
+      "<p>Always been a fan of computers, grew up playing a lot of PC games.</p><p>That got me interested, so I applied for computer science and got into the university. My story starts..</p>",
   },
 ];
 
 export default function ChroniclePage() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const timelineByYear = buildChronicleTimeline(timelineData);
 
   return (
@@ -97,19 +92,20 @@ export default function ChroniclePage() {
                 }}
               >
                 {entries.map(({ event: entry, index: idx, marginTopPx }) => {
-                  const isOpen = openIndex === idx;
                   const dateRange = getHoverRange(entry, timelineData);
 
                   return (
                     <div
                       className="chronicle-timeline-vertical__row"
                       key={`${entry.group ?? entry.title}-${entry.year}-${entry.month}-${idx}`}
-                      style={{ marginTop: marginTopPx ? `${marginTopPx}px` : undefined }}
+                      style={{
+                        marginTop: marginTopPx ? `${marginTopPx}px` : undefined,
+                      }}
                     >
                       <div className="chronicle-timeline-vertical__rail" />
                       <div className="chronicle-timeline-vertical__events">
-                        <div
-                          className={`chronicle-event${isOpen ? " is-open" : ""}${entry.group ? " chronicle-event--group" : ""}`}
+                        <article
+                          className={`chronicle-event${entry.group ? " chronicle-event--group" : ""}`}
                           data-group={entry.group}
                         >
                           <span
@@ -118,43 +114,24 @@ export default function ChroniclePage() {
                             tabIndex={0}
                             aria-label={dateRange}
                           />
-                          <button
-                            className="chronicle-event__trigger"
-                            type="button"
-                            aria-expanded={isOpen}
-                            onClick={() => setOpenIndex(isOpen ? null : idx)}
-                          >
-                            <span className="chronicle-event__heading">
-                              <span className="chronicle-event__title">
+                          <header className="chronicle-event__header">
+                            <div className="chronicle-event__heading">
+                              <h2 className="chronicle-event__title">
                                 {entry.title}{" "}
                                 {entry.at ? <span>{entry.at}</span> : null}
-                              </span>
-                              <span className="chronicle-event__meta mono">
+                              </h2>
+                              <p className="chronicle-event__meta mono">
                                 {dateRange}
-                              </span>
-                            </span>
-                            <svg
-                              className="chronicle-event__chevron"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              aria-hidden="true"
-                            >
-                              <path d="M6 9l6 6 6-6" />
-                            </svg>
-                          </button>
-                          <div className="chronicle-event__drop">
-                            <div className="chronicle-event__drop-inner">
-                              <div
-                                className="chronicle-event__description"
-                                dangerouslySetInnerHTML={{
-                                  __html: entry.description.trim(),
-                                }}
-                              />
+                              </p>
                             </div>
-                          </div>
-                        </div>
+                          </header>
+                          <div
+                            className="chronicle-event__description"
+                            dangerouslySetInnerHTML={{
+                              __html: entry.description.trim(),
+                            }}
+                          />
+                        </article>
                       </div>
                     </div>
                   );

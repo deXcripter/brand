@@ -27,9 +27,10 @@ export const metadata: Metadata = {
     "Johnpaul Nnaji builds AI tools to help brands rank higher. Software engineer learning SEO in public, building SEORCE — an intelligence platform for search and AI visibility.",
   icons: {
     icon: [
-      { url: "/favicon.ico" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/icon.svg", type: "image/svg+xml" },
     ],
+    shortcut: "/favicon.svg",
   },
 };
 
