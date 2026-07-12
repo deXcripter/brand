@@ -1,9 +1,7 @@
 import type { MetadataRoute } from "next";
 
-/**
- * Thin fallback robots.txt. The canonical `/robots.txt` is served
- * by the backend via the next.config.ts rewrite to `/api/seo/robots.txt`.
- */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://dexcripter.com";
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
@@ -11,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/dashboard/", "/api/"],
     },
-    sitemap: "https://dexcripter.com/sitemap.xml",
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
