@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./theme-toggle";
 
 const links = [
-  { href: "/#about", label: "about" },
+  { href: "/", label: "home" },
   { href: "/chronicle", label: "chronicle" },
   { href: "/gallery", label: "gallery" },
   { href: "/blog", label: "blog" },
@@ -17,7 +17,7 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   function isActive(href: string): boolean {
-    if (href.startsWith("/#")) return pathname === "/";
+    if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   }
 

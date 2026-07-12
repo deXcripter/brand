@@ -1300,10 +1300,41 @@ ul { list-style: none; margin: 0; padding: 0; }
    FOOTER
    ============================================ */
 .footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
   text-align: center;
   padding: var(--space-4);
   font-size: var(--fs-xs);
   color: var(--text-muted);
+}
+
+.footer__socials {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.footer__social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  transition: color var(--transition), background var(--transition);
+}
+
+.footer__social svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.footer__social:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 
 /* ============================================

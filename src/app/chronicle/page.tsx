@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   buildChronicleTimeline,
   getHoverRange,
@@ -147,24 +146,6 @@ export default function ChroniclePage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section section--alt">
-        <div className="section__inner section__inner--center">
-          <p className="eyebrow mono">// collaborate</p>
-          <h2 className="section__title">Have an idea?</h2>
-          <p className="connect__sub">
-            If you&apos;re working on something in AI or search and want to talk,
-            find me at <span className="mono">@dexcripter</span>.
-          </p>
-          <Link
-            href="/#connect"
-            className="btn btn--primary"
-            style={{ marginTop: "var(--space-3)" }}
-          >
-            Get in touch
-          </Link>
         </div>
       </section>
     </>
