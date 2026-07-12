@@ -668,6 +668,8 @@ ul { list-style: none; margin: 0; padding: 0; }
 .chronicle-timeline-vertical {
   --chronicle-rail-width: 120px;
   --chronicle-rail-inset: 18px;
+  --chronicle-line-x: calc(var(--chronicle-rail-width) - var(--chronicle-rail-inset));
+  --chronicle-node-size: 12px;
   --chronicle-gap-scale: 1;
   --chronicle-year-sticky-top: calc(3.5rem + var(--space-2));
   position: relative;
@@ -680,10 +682,11 @@ ul { list-style: none; margin: 0; padding: 0; }
 .chronicle-timeline-vertical::before {
   content: "";
   position: absolute;
-  top: 1.75rem;
+  top: 1.35rem;
   bottom: 0.75rem;
-  left: calc(var(--chronicle-rail-width) - var(--chronicle-rail-inset));
+  left: var(--chronicle-line-x);
   width: 2px;
+  transform: translateX(-50%);
   background: linear-gradient(to bottom, var(--accent), var(--border));
   border-radius: 1px;
 }
@@ -691,26 +694,28 @@ ul { list-style: none; margin: 0; padding: 0; }
 .chronicle-timeline-vertical::after {
   content: "";
   position: absolute;
-  left: calc(var(--chronicle-rail-width) - var(--chronicle-rail-inset));
-  top: 0.6rem;
-  width: 16px;
-  height: 10px;
-  transform: translateX(-50%) rotate(180deg);
-  opacity: 0.78;
-  background:
-    linear-gradient(45deg, transparent 46%, var(--accent) 46%, var(--accent) 54%, transparent 54%),
-    linear-gradient(-45deg, transparent 46%, var(--accent) 46%, var(--accent) 54%, transparent 54%);
-  background-size: 50% 100%;
-  background-repeat: no-repeat;
-  background-position: left center, right center;
-  animation: chronicle-arrow-nudge 1800ms ease-in-out infinite;
+  left: var(--chronicle-line-x);
+  top: 0.45rem;
+  width: 11px;
+  height: 9px;
+  transform: translateX(-50%);
+  background: var(--accent);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 45%, transparent));
+  animation: chronicle-arrow-nudge 2.4s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes chronicle-arrow-nudge {
-  0% { transform: translateX(-50%) rotate(180deg) translateY(0); opacity: 0.7; }
-  50% { transform: translateX(-50%) rotate(180deg) translateY(-3px); opacity: 0.95; }
-  100% { transform: translateX(-50%) rotate(180deg) translateY(0); opacity: 0.7; }
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.88;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-2px);
+    opacity: 1;
+  }
 }
 
 .chronicle-timeline-vertical__year {
@@ -751,9 +756,9 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .chronicle-timeline-vertical__year-label {
-  position: static;
+  position: relative;
   text-align: right;
-  padding: var(--space-2) 3.25rem var(--space-2) 0;
+  padding: var(--space-2) calc(var(--chronicle-rail-inset) + 0.75rem) var(--space-2) 0;
   margin-bottom: var(--space-1);
   font-size: var(--fs-sm);
   color: var(--accent);
@@ -763,11 +768,11 @@ ul { list-style: none; margin: 0; padding: 0; }
 .chronicle-timeline-vertical__year-label::after {
   content: "";
   position: absolute;
-  right: 0.95rem;
+  right: var(--chronicle-rail-inset);
   top: 50%;
-  transform: translateY(-50%);
-  width: 1.1rem;
+  width: 0.75rem;
   height: 2px;
+  transform: translateY(-50%);
   background: var(--border);
 }
 
@@ -788,10 +793,12 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .chronicle-event__node {
   position: absolute;
-  left: calc(-1 * (var(--space-4) + var(--chronicle-rail-inset)) - 7px);
+  /* Back across the row gap + rail inset to the shared line axis */
+  left: calc(-1 * (var(--space-4) + var(--chronicle-rail-inset)));
   top: 1.1rem;
-  width: 12px;
-  height: 12px;
+  width: var(--chronicle-node-size);
+  height: var(--chronicle-node-size);
+  transform: translateX(-50%);
   border: 2px solid var(--accent);
   border-radius: 50%;
   background: var(--accent);
@@ -906,6 +913,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   .chronicle-timeline-vertical {
     --chronicle-rail-width: 3.25rem;
     --chronicle-rail-inset: 0.7rem;
+    --chronicle-node-size: 10px;
     --chronicle-gap-scale: 0.5;
     --chronicle-year-sticky-top: calc(3.25rem + var(--space-1));
     padding-top: var(--space-1);
@@ -913,15 +921,14 @@ ul { list-style: none; margin: 0; padding: 0; }
   }
 
   .chronicle-timeline-vertical::before {
-    top: 1.55rem;
+    top: 1.2rem;
     bottom: 0.5rem;
-    width: 2px;
   }
 
   .chronicle-timeline-vertical::after {
-    top: 0.45rem;
-    width: 14px;
-    height: 9px;
+    top: 0.35rem;
+    width: 9px;
+    height: 7px;
   }
 
   .chronicle-timeline-vertical__row {
@@ -932,7 +939,7 @@ ul { list-style: none; margin: 0; padding: 0; }
     position: sticky;
     top: var(--chronicle-year-sticky-top);
     z-index: 2;
-    padding: var(--space-1) 1.85rem var(--space-1) 0;
+    padding: var(--space-1) calc(var(--chronicle-rail-inset) + 0.55rem) var(--space-1) 0;
     font-size: var(--fs-xs);
     background: linear-gradient(
       90deg,
@@ -943,15 +950,12 @@ ul { list-style: none; margin: 0; padding: 0; }
   }
 
   .chronicle-timeline-vertical__year-label::after {
-    right: 0.7rem;
-    width: 0.75rem;
+    width: 0.55rem;
   }
 
   .chronicle-event__node {
-    left: calc(-1 * (var(--space-2) + var(--chronicle-rail-inset)) - 6px);
+    left: calc(-1 * (var(--space-2) + var(--chronicle-rail-inset)));
     top: 1.15rem;
-    width: 10px;
-    height: 10px;
     box-shadow: 0 0 0 2px var(--accent-soft);
   }
 
@@ -991,23 +995,17 @@ ul { list-style: none; margin: 0; padding: 0; }
   .chronicle-timeline-vertical {
     --chronicle-rail-width: 2.75rem;
     --chronicle-rail-inset: 0.55rem;
+    --chronicle-node-size: 9px;
     --chronicle-gap-scale: 0.42;
   }
 
   .chronicle-timeline-vertical__year-label {
-    padding-right: 1.55rem;
+    padding-right: calc(var(--chronicle-rail-inset) + 0.45rem);
     font-size: 0.72rem;
   }
 
   .chronicle-timeline-vertical__year-label::after {
-    right: 0.55rem;
-    width: 0.55rem;
-  }
-
-  .chronicle-event__node {
-    left: calc(-1 * (var(--space-2) + var(--chronicle-rail-inset)) - 5px);
-    width: 9px;
-    height: 9px;
+    width: 0.45rem;
   }
 }
 
