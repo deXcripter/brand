@@ -19,11 +19,17 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Johnpaul Nnaji — Software Engineer",
+  title: {
+    template: "%s — Johnpaul Nnaji",
+    default: "Johnpaul Nnaji - Software Engineer & SEO Builder",
+  },
   description:
-    "I build AI tools to help brands rank higher. Software engineer learning SEO in public.",
+    "Johnpaul Nnaji builds AI tools to help brands rank higher. Software engineer learning SEO in public, building SEORCE — an intelligence platform for search and AI visibility.",
   icons: {
-    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23facc15'%3E%3Cpath d='M13 2L3 14h6l-1 8 10-12h-6l1-8z'/%3E%3C/svg%3E",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
   },
 };
 
@@ -54,6 +60,35 @@ export default function RootLayout({
             <main>{children}</main>
           </SiteChrome>
         </ThemeProvider>
+        {/* Person JSON-LD — tells search engines who I am */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Johnpaul Nnaji",
+              givenName: "Johnpaul",
+              familyName: "Nnaji",
+              url: "https://dexcripter.com",
+              jobTitle: "Software Engineer",
+              description:
+                "Software engineer building AI tools to help brands rank higher. Studying SEO in public and building SEORCE — an intelligence platform for search and AI visibility.",
+              sameAs: [
+                "https://github.com/dexcripter",
+                "https://x.com/dexcripter",
+                "https://linkedin.com/in/dexcripter",
+              ],
+              knowsAbout: [
+                "Search Engine Optimization",
+                "Artificial Intelligence",
+                "Generative Engine Optimization",
+                "Software Engineering",
+                "Technical SEO",
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );

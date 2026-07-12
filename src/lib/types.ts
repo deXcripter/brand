@@ -7,6 +7,8 @@ export interface BlogPost {
   content: string;
   body?: string[];
   published: boolean;
+  /** Custom meta description from the backend. Falls back to auto-generated excerpt. */
+  metaDescription?: string;
 }
 
 export interface GalleryImage {

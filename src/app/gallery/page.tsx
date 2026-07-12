@@ -1,7 +1,23 @@
+import type { Metadata } from "next";
 import { fetchGalleryBatch, type GalleryImage } from "@/lib/gallery";
 import GalleryView from "@/components/gallery-view";
 
-export const dynamic = "force-dynamic";
+/** ISR: revalidate every 60 seconds so new photos appear without a full redeploy. */
+export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Gallery — Photo Timeline by Johnpaul Nnaji",
+  },
+  description:
+    "A running, unfiltered photo timeline of Johnpaul Nnaji's journey — building SEORCE, learning SEO, and capturing moments along the way.",
+  openGraph: {
+    title: "Gallery — Photo Timeline by Johnpaul Nnaji",
+    description:
+      "A running, unfiltered photo timeline of Johnpaul Nnaji's journey — building SEORCE, learning SEO, and capturing moments along the way.",
+    type: "website",
+  },
+};
 
 export default async function GalleryPage() {
   let images: GalleryImage[] = [];

@@ -44,8 +44,23 @@ export default function Nav() {
   return (
     <div className={`nav-shell${menuOpen ? " nav-shell--open" : ""}`}>
       <header className="nav">
-        <Link href="/" className="nav__mark">
-          de⚡cripter
+        <Link href="/" className="nav__mark" aria-label="Johnpaul Nnaji home">
+          <svg
+            className="nav__mark-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="navBoltGradient" x1="174" y1="88" x2="332" y2="414" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#63F4DF" />
+                <stop offset="35%" stopColor="#29C8E6" />
+                <stop offset="70%" stopColor="#397AF5" />
+                <stop offset="100%" stopColor="#3040B8" />
+              </linearGradient>
+            </defs>
+            <path d="M298 86L182 268H252L216 426L332 220H265L298 86Z" fill="url(#navBoltGradient)" />
+          </svg>
         </Link>
         <div className="nav__right">
           <button

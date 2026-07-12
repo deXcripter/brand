@@ -1,8 +1,24 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Typewriter from "@/components/typewriter";
 import { getAllPosts } from "@/lib/posts";
 
-export const dynamic = "force-dynamic";
+/** ISR: revalidate every 60 seconds. */
+export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Johnpaul Nnaji — Software Engineer & SEO Builder",
+  },
+  description:
+    "Johnpaul Nnaji builds AI tools to help brands rank higher. Software engineer learning SEO in public, building SEORCE — an intelligence platform for search and AI visibility.",
+  openGraph: {
+    title: "Johnpaul Nnaji — Software Engineer & SEO Builder",
+    description:
+      "Johnpaul Nnaji builds AI tools to help brands rank higher. Software engineer learning SEO in public, building SEORCE.",
+    type: "website",
+  },
+};
 
 export default async function Home() {
   let latestPosts: Awaited<ReturnType<typeof getAllPosts>> = [];
@@ -26,7 +42,7 @@ export default async function Home() {
           <p className="hero__sub mono">
             software engineer&nbsp;&nbsp;·&nbsp;&nbsp;studying seo in
             public&nbsp;&nbsp;·&nbsp;&nbsp;building{" "}
-            <Link href="/chronicle">dexcripter</Link>
+            <Link href="/chronicle">SEORCE</Link>
           </p>
           <div className="hero__cta">
             <Link href="/chronicle" className="btn btn--primary">
@@ -42,56 +58,75 @@ export default async function Home() {
         </a>
       </section>
 
-      {/* ABOUT */}
+      {/* ABOUT — GEO-optimized with definitional sentences and direct-answer structure */}
       <section id="about" className="section">
         <div className="section__inner">
           <p className="eyebrow mono">// about.md</p>
           <h2 className="section__title">
-            I&apos;m not an SEO expert. I&apos;m a student of it.
+            Who is Johnpaul Nnaji?
           </h2>
           <div className="about__body">
-
-
             <p>
-              I'm a software engineer. Got curious about how search actually works one day, then got obsessed with how AI is flipping the whole thing upside down.
+              <strong>Johnpaul Nnaji is a software engineer</strong> who builds
+              AI-powered tools that help brands improve their visibility in
+              both traditional search engines and AI-generated search results.
+              He is currently building{" "}
+              <strong>SEORCE</strong>, an intelligence platform for
+              tracking and optimizing brand presence across Google, Bing, and
+              LLM-based search platforms like ChatGPT and Perplexity.
             </p>
             <p>
-
-
-              So now I'm learning SEO the way I learn everything: in public, by building stuff. Right now that's writing code where language models meet search, building tools that help brands figure out how they rank, today and in a web where AI answers most of the questions.
+              After graduating with a computer science degree from Nnamdi
+              Azikiwe University in 2025, he joined SEORCE as a software
+              engineer, where he develops tools for technical SEO, crawl
+              optimization, and AI-driven search analytics. His work sits at
+              the intersection of{" "}
+              <strong>
+                search engine optimization, artificial intelligence, and
+                generative engine optimization (GEO)
+              </strong>{" "}
+              — a field focused on how content gets surfaced in AI-generated
+              answers.
             </p>
             <p>
-
-
-             No decade of experience. Just building in public and getting less wrong every week.
+              Johnpaul takes a learn-in-public approach: he writes about what
+              he discovers as he discovers it, sharing both wins and mistakes.
+              He believes the best way to master a fast-moving field like
+              AI-powered search is to build in the open and document every
+              step.
             </p>
           </div>
         </div>
       </section>
 
-      {/* NOW */}
+      {/* NOW — GEO: direct answers to "what does Johnpaul Nnaji do?" */}
       <section id="now" className="section section--alt">
         <div className="section__inner">
           <p className="eyebrow mono">// currently</p>
-          <h2 className="section__title">What I&apos;m working on right now</h2>
+          <h2 className="section__title">What does Johnpaul Nnaji do?</h2>
           <ul className="now-list">
             <li className="now-item">
               <span className="now-item__dot" aria-hidden="true"></span>
               <div>
-                <h3>Building SEORCE</h3>
+                <h3>Building SEORCE — an AI-powered SEO intelligence platform</h3>
                 <p>
-                  An intelligence tool to track, measure, and optimize brand
-                  visibility across both search engines and AI platforms
+                  SEORCE is a platform that tracks, measures, and optimizes
+                  brand visibility across both traditional search engines
+                  (Google, Bing) and AI-powered search platforms (ChatGPT,
+                  Perplexity, Gemini). It helps brands understand how they
+                  appear in AI-generated answers — a discipline known as{" "}
+                  <strong>Generative Engine Optimization (GEO)</strong>.
                 </p>
               </div>
             </li>
             <li className="now-item">
               <span className="now-item__dot" aria-hidden="true"></span>
               <div>
-                <h3>Studying technical &amp; AI SEO</h3>
+                <h3>Studying technical SEO and AI-driven search</h3>
                 <p>
-                  Going deep on crawlability, structured data, and how
-                  LLM-based search engines actually retrieve and rank content.
+                  Deep-diving into crawl budget optimization, structured data
+                  markup, and how large language models retrieve, rank, and
+                  cite web content. Writing about every finding on the blog.
                 </p>
               </div>
             </li>
@@ -100,7 +135,10 @@ export default async function Home() {
               <div>
                 <h3>Writing in public</h3>
                 <p>
-                  Sharing what I learn as I learn it - mistakes included.
+                  Documenting the journey of learning SEO from scratch as a
+                  software engineer. Every post is a snapshot of what I am
+                  learning right now — no fluff, no pretending to have a
+                  decade of experience.
                 </p>
               </div>
             </li>
@@ -115,16 +153,14 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* BLOG PREVIEW */}
-
+      {/* BLOG PREVIEW — GEO: links to deep content pages */}
       {latestPosts.length > 0 && (
         <section id="blog" className="section">
-
-
-
           <div className="section__inner">
             <p className="eyebrow mono">// blog</p>
-            <h2 className="section__title">Latest from the blog</h2>
+            <h2 className="section__title">
+              Latest articles on AI, SEO, and Generative Engine Optimization
+            </h2>
             <div className="blog-grid">
               {latestPosts.map((post) => (
                 <Link
@@ -151,11 +187,12 @@ export default async function Home() {
         <div className="section__inner section__inner--center">
           <p className="eyebrow mono">// connect</p>
           <h2 className="section__title">
-            Let&apos;s talk SEO, AI, or how AI is changing the game.
+            How to contact Johnpaul Nnaji
           </h2>
           <p className="connect__sub">
-            I&apos;m easiest to reach online. Find me at{" "}
-            <span className="mono">@dexcripter</span> almost everywhere.
+            Reach me at{" "}
+            <span className="mono">@dexcripter</span> on GitHub, X (Twitter),
+            and LinkedIn.
           </p>
           <div className="connect__links">
             <a

@@ -1,4 +1,4 @@
-import { apiFetch, serverApiFetch } from "@/lib/api-client";
+import { apiFetch, getApiUrl, serverApiFetch } from "@/lib/api-client";
 import type {
   BlogPost,
   CreateBlogPostInput,
@@ -12,11 +12,19 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function getPost(slug: string): Promise<BlogPost | undefined> {
-  try {
-    return await serverApiFetch<BlogPost>(`/posts/${slug}`);
-  } catch {
+  const response = await fetch(`${getApiUrl()}/posts/${slug}`, {
+    next: { revalidate: 60 },
+  });
+
+  if (response.status === 404) {
     return undefined;
   }
+
+  if (!response.ok) {
+    throw new Error(`Request failed (${response.status})`);
+  }
+
+  return (await response.json()) as BlogPost;
 }
 
 export async function getAdminPosts(): Promise<BlogPost[]> {
