@@ -167,11 +167,11 @@ export function getHoverRange(
     }
 
     if (event.status === "end") {
-      return `${start} — ${formatMonthYear(end.month, end.year)}`;
+      return `${start} to ${formatMonthYear(end.month, end.year)}`;
     }
 
     if (eventTimestamp(end) > eventTimestamp(beginning)) {
-      return `${start} — ${formatMonthYear(end.month, end.year)}`;
+      return `${start} to ${formatMonthYear(end.month, end.year)}`;
     }
 
     return start;
@@ -179,7 +179,7 @@ export function getHoverRange(
 
   const point = formatMonthYear(event.month, event.year);
   if (isLatestEvent(event, allEvents)) {
-    return `${point} — Present`;
+    return `${point} to Present`;
   }
   return point;
 }

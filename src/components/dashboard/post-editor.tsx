@@ -130,7 +130,7 @@ export default function PostEditor({ mode, initial }: PostEditorProps) {
           className="post-editor__subtitle"
           value={subtitle}
           onChange={(event) => setSubtitle(event.target.value)}
-          placeholder="Subtitle — a short hook for readers"
+          placeholder="Subtitle, a short hook for readers"
           required
         />
       </div>

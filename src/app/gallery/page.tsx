@@ -7,14 +7,13 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Gallery — Photo Timeline by Johnpaul Nnaji",
+    absolute: "Gallery | Johnpaul Nnaji",
   },
   description:
-    "A running, unfiltered photo timeline of Johnpaul Nnaji's journey — building SEORCE, learning SEO, and capturing moments along the way.",
+    "Photos from work and life. Tap any image to open it.",
   openGraph: {
-    title: "Gallery — Photo Timeline by Johnpaul Nnaji",
-    description:
-      "A running, unfiltered photo timeline of Johnpaul Nnaji's journey — building SEORCE, learning SEO, and capturing moments along the way.",
+    title: "Gallery | Johnpaul Nnaji",
+    description: "Photos from work and life. Tap any image to open it.",
     type: "website",
   },
 };
@@ -36,9 +35,9 @@ export default async function GalleryPage() {
       <section className="page-header">
         <div className="section__inner">
           <p className="eyebrow mono">// gallery</p>
-          <h1 className="page-header__title">Captured along the way</h1>
+          <h1 className="page-header__title">Gallery</h1>
           <p className="page-header__sub">
-            A running, unfiltered timeline. Tap any photo to expand it.
+            Photos I&apos;ve taken. Tap any one to open it.
           </p>
         </div>
       </section>

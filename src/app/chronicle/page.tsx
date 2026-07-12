@@ -13,10 +13,9 @@ const timelineData: TimelineEvent[] = [
     title: "Software Engineer",
     at: "@ SEORCE",
     description: `
-    <p>Before SEORCE, I was deep into crypto. Messing with smart contracts, doing some audits, that was where my head was at.</p>
-<p>When I got the offer, I wasn't excited about it. It paid the bills though, so I took it. My plan was to stay till December then leave. The team moved fast, we pushed hard almost every day, and I didn't think I'd last much longer than that.</p>
-<p>Somewhere in there things shifted. Building SEO tools meant learning how a lot of stuff worked under the hood, and I actually started enjoying it. December came and went and I was still there.</p>
-<p>This ended up being the turning point. I stopped thinking of it as something to push through and started going all in on SEO. Still figuring myself out in a lot of ways, but this was the first time I felt sure about a direction.</p>
+    <p>Before SEORCE I was mostly in crypto: smart contracts, audits, that world.</p>
+<p>I took the job without being sure it was for me. The team shipped fast, and I figured I'd stay through the year then move on. Working on SEO tools changed my mind. Once I started looking at how crawlers, rankings, and AI search actually work, I got hooked.</p>
+<p>I stayed. That role is where I decided to go all in on SEO and the tools around it.</p>
 `,
   },
   {
@@ -68,7 +67,7 @@ export default function ChroniclePage() {
           <p className="eyebrow mono">// chronicle</p>
           <h1 className="page-header__title">Chronicle</h1>
           <p className="page-header__sub">
-            Milestones, projects, and the moments that shaped my path.
+            School, jobs, and the work that stuck.
           </p>
         </div>
       </section>
@@ -156,9 +155,8 @@ export default function ChroniclePage() {
           <p className="eyebrow mono">// collaborate</p>
           <h2 className="section__title">Have an idea?</h2>
           <p className="connect__sub">
-            I&apos;m always open to interesting projects at the intersection of AI
-            and search. Reach out at{" "}
-            <span className="mono">@dexcripter</span>.
+            If you&apos;re working on something in AI or search and want to talk,
+            find me at <span className="mono">@dexcripter</span>.
           </p>
           <Link
             href="/#connect"

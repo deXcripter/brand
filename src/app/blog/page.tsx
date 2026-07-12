@@ -7,14 +7,14 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Blog — AI, SEO & GEO by Johnpaul Nnaji",
+    absolute: "Blog | Johnpaul Nnaji",
   },
   description:
-    "Writing about AI, SEO, and building SEORCE in public. Technical deep-dives on crawl optimization, AI-powered search, and generative engine visibility.",
+    "Notes on SEO, AI search, and building SEORCE. Written while learning, not after the fact.",
   openGraph: {
-    title: "Blog — AI, SEO & GEO by Johnpaul Nnaji",
+    title: "Blog | Johnpaul Nnaji",
     description:
-      "Writing about AI, SEO, and building SEORCE in public. Technical deep-dives on crawl optimization, AI-powered search, and generative engine visibility.",
+      "Notes on SEO, AI search, and building SEORCE. Written while learning, not after the fact.",
     type: "website",
   },
 };
@@ -29,21 +29,15 @@ export default async function BlogPage() {
           <p className="eyebrow mono">// blog</p>
           <h1 className="page-header__title">Writing as I learn</h1>
           <p className="page-header__sub">
-            <strong>
-              A learn-in-public journal on AI-powered search, technical SEO,
-              and Generative Engine Optimization (GEO).
-            </strong>{" "}
-            Every article is written by Johnpaul Nnaji as he builds SEORCE
-            — an intelligence platform that tracks brand visibility across
-            search engines and AI platforms. No decade of experience, just
-            building in the open and getting less wrong every week.
+            Notes on SEO, AI search, and whatever I run into while building
+            SEORCE. I&apos;m learning this in public, so expect rough edges.
           </p>
         </div>
       </section>
 
       <section className="post-list section__inner">
         {posts.length === 0 ? (
-          <p className="post-list__empty">No posts yet — check back soon.</p>
+          <p className="post-list__empty">No posts yet. Check back soon.</p>
         ) : (
           posts.map((post) => (
             <Link

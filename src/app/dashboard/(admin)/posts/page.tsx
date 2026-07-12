@@ -41,7 +41,7 @@ export default function DashboardPostsPage() {
         <section className="dashboard-panel post-list-empty">
           <h2 className="dashboard-panel__title">Start your first story</h2>
           <p className="dashboard-muted">
-            Use headings, quotes, code blocks, and inline images — just like Medium.
+            Use headings, quotes, code blocks, and inline images, just like Medium.
           </p>
           <Link href="/dashboard/posts/new" className="btn btn--primary">
             Write a post

@@ -20,11 +20,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s — Johnpaul Nnaji",
-    default: "Johnpaul Nnaji - Software Engineer & SEO Builder",
+    template: "%s | Johnpaul Nnaji",
+    default: "Johnpaul Nnaji | Software Engineer & SEO Builder",
   },
   description:
-    "Johnpaul Nnaji builds AI tools to help brands rank higher. Software engineer learning SEO in public, building SEORCE — an intelligence platform for search and AI visibility.",
+    "Johnpaul Nnaji is a software engineer building AI tools for search visibility. Currently working on SEORCE.",
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -74,7 +74,7 @@ export default function RootLayout({
               url: "https://dexcripter.com",
               jobTitle: "Software Engineer",
               description:
-                "Software engineer building AI tools to help brands rank higher. Studying SEO in public and building SEORCE — an intelligence platform for search and AI visibility.",
+                "Software engineer building AI tools for search visibility. Currently working on SEORCE.",
               sameAs: [
                 "https://github.com/dexcripter",
                 "https://x.com/dexcripter",

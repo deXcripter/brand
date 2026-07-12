@@ -28,14 +28,14 @@ export async function generateMetadata({
   const post = await getPost(slug);
 
   if (!post) {
-    return { title: "Post not found — Johnpaul Nnaji" };
+    return { title: "Post not found | Johnpaul Nnaji" };
   }
 
   const description = post.metaDescription || post.subtitle || excerptFromHtml(getPostContent(post), 160);
 
   return {
     title: {
-      absolute: `${post.title} — Johnpaul Nnaji`,
+      absolute: `${post.title} | Johnpaul Nnaji`,
     },
     description,
     openGraph: {
@@ -94,7 +94,7 @@ export default async function BlogPostPage({
       <aside className="blog-post__tldr" aria-label="Key takeaways">
         <h2 className="blog-post__tldr-title mono">// tldr</h2>
         <p className="blog-post__tldr-text">
-          <strong>{post.title}</strong> — {post.subtitle}
+          <strong>{post.title}</strong>. {post.subtitle}
         </p>
       </aside>
 

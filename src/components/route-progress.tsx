@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const HIDE_DELAY_MS = 220;
+const MIN_VISIBLE_MS = 420;
+const HIDE_DELAY_MS = 280;
 
 export default function RouteProgress() {
   const pathname = usePathname();
@@ -12,6 +13,8 @@ export default function RouteProgress() {
   const [progress, setProgress] = useState(0);
 
   const activeRef = useRef(false);
+  const startedAtRef = useRef(0);
+  const pathnameRef = useRef(pathname);
   const settleTimeoutRef = useRef<number | null>(null);
   const trickleIntervalRef = useRef<number | null>(null);
 
@@ -27,20 +30,19 @@ export default function RouteProgress() {
   }
 
   function startProgress() {
-    if (activeRef.current) return;
-    activeRef.current = true;
-
     clearTimers();
+    activeRef.current = true;
+    startedAtRef.current = Date.now();
     setVisible(true);
-    setProgress(12);
+    setProgress(18);
 
     trickleIntervalRef.current = window.setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 86) return prev;
-        const step = prev < 40 ? 9 : prev < 70 ? 5 : 2;
-        return Math.min(86, prev + step);
+        if (prev >= 88) return prev;
+        const step = prev < 40 ? 10 : prev < 70 ? 6 : 2;
+        return Math.min(88, prev + step);
       });
-    }, 140);
+    }, 120);
   }
 
   function finishProgress() {
@@ -52,19 +54,26 @@ export default function RouteProgress() {
       trickleIntervalRef.current = null;
     }
 
-    setProgress(100);
+    const elapsed = Date.now() - startedAtRef.current;
+    const wait = Math.max(0, MIN_VISIBLE_MS - elapsed);
+
     settleTimeoutRef.current = window.setTimeout(() => {
-      setVisible(false);
-      setProgress(0);
-      settleTimeoutRef.current = null;
-    }, HIDE_DELAY_MS);
+      setProgress(100);
+      settleTimeoutRef.current = window.setTimeout(() => {
+        setVisible(false);
+        setProgress(0);
+        settleTimeoutRef.current = null;
+      }, HIDE_DELAY_MS);
+    }, wait);
   }
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       if (event.defaultPrevented) return;
       if (event.button !== 0) return;
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
 
       const target = event.target as HTMLElement | null;
       const link = target?.closest("a[href]") as HTMLAnchorElement | null;
@@ -75,10 +84,14 @@ export default function RouteProgress() {
       const href = link.getAttribute("href");
       if (!href || href.startsWith("#")) return;
 
-      const nextUrl = new URL(link.href, window.location.href);
-      const currentUrl = new URL(window.location.href);
+      let nextUrl: URL;
+      try {
+        nextUrl = new URL(link.href, window.location.href);
+      } catch {
+        return;
+      }
 
-      // Only show progress for same-origin route changes that should trigger Next navigation.
+      const currentUrl = new URL(window.location.href);
       if (nextUrl.origin !== currentUrl.origin) return;
       if (
         nextUrl.pathname === currentUrl.pathname &&
@@ -94,19 +107,20 @@ export default function RouteProgress() {
       startProgress();
     };
 
-    document.addEventListener("click", handleClick);
+    // Capture phase so we start before Next.js handles the click.
+    document.addEventListener("click", handleClick, true);
     window.addEventListener("popstate", handlePopState);
 
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", handleClick, true);
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
 
-  // Any route update means navigation settled.
   useEffect(() => {
+    if (pathnameRef.current === pathname) return;
+    pathnameRef.current = pathname;
     finishProgress();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   useEffect(() => {
@@ -122,7 +136,9 @@ export default function RouteProgress() {
     >
       <span
         className="route-progress__bar"
-        style={{ transform: `scaleX(${Math.max(0, Math.min(1, progress / 100))})` }}
+        style={{
+          transform: `scaleX(${Math.max(0, Math.min(1, progress / 100))})`,
+        }}
       />
     </div>
   );

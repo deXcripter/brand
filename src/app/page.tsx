@@ -8,14 +8,14 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Johnpaul Nnaji — Software Engineer & SEO Builder",
+    absolute: "Johnpaul Nnaji | Software Engineer & SEO Builder",
   },
   description:
-    "Johnpaul Nnaji builds AI tools to help brands rank higher. Software engineer learning SEO in public, building SEORCE — an intelligence platform for search and AI visibility.",
+    "Johnpaul Nnaji is a software engineer building AI tools for search visibility. Currently working on SEORCE.",
   openGraph: {
-    title: "Johnpaul Nnaji — Software Engineer & SEO Builder",
+    title: "Johnpaul Nnaji | Software Engineer & SEO Builder",
     description:
-      "Johnpaul Nnaji builds AI tools to help brands rank higher. Software engineer learning SEO in public, building SEORCE.",
+      "Software engineer building AI tools for search. Currently working on SEORCE.",
     type: "website",
   },
 };
@@ -40,8 +40,7 @@ export default async function Home() {
             I build AI tools to help brands rank higher.
           </p>
           <p className="hero__sub mono">
-            software engineer&nbsp;&nbsp;·&nbsp;&nbsp;studying seo in
-            public&nbsp;&nbsp;·&nbsp;&nbsp;building{" "}
+            software engineer&nbsp;&nbsp;·&nbsp;&nbsp;learning seo&nbsp;&nbsp;·&nbsp;&nbsp;building{" "}
             <Link href="/chronicle">SEORCE</Link>
           </p>
           <div className="hero__cta">
@@ -67,33 +66,24 @@ export default async function Home() {
           </h2>
           <div className="about__body">
             <p>
-              <strong>Johnpaul Nnaji is a software engineer</strong> who builds
-              AI-powered tools that help brands improve their visibility in
-              both traditional search engines and AI-generated search results.
-              He is currently building{" "}
-              <strong>SEORCE</strong>, an intelligence platform for
-              tracking and optimizing brand presence across Google, Bing, and
-              LLM-based search platforms like ChatGPT and Perplexity.
+              <strong>Johnpaul Nnaji is a software engineer</strong> building
+              tools that help brands show up better in Google and in AI search
+              (ChatGPT, Perplexity, and similar). Right now he works on{" "}
+              <strong>SEORCE</strong>, a product for tracking how brands appear
+              across those surfaces.
             </p>
             <p>
-              After graduating with a computer science degree from Nnamdi
-              Azikiwe University in 2025, he joined SEORCE as a software
-              engineer, where he develops tools for technical SEO, crawl
-              optimization, and AI-driven search analytics. His work sits at
-              the intersection of{" "}
-              <strong>
-                search engine optimization, artificial intelligence, and
-                generative engine optimization (GEO)
-              </strong>{" "}
-              — a field focused on how content gets surfaced in AI-generated
-              answers.
+              He graduated with a computer science degree from Nnamdi Azikiwe
+              University in 2025, then joined SEORCE. Day to day that means
+              technical SEO, crawl work, and analytics around how AI systems
+              pull and cite web content. The overlapping interest is SEO, AI,
+              and{" "}
+              <strong>generative engine optimization (GEO)</strong>: how pages
+              get into AI answers in the first place.
             </p>
             <p>
-              Johnpaul takes a learn-in-public approach: he writes about what
-              he discovers as he discovers it, sharing both wins and mistakes.
-              He believes the best way to master a fast-moving field like
-              AI-powered search is to build in the open and document every
-              step.
+              He writes while he learns. Posts are notes from building, not
+              polished lectures from someone with ten years in the field.
             </p>
           </div>
         </div>
@@ -108,37 +98,34 @@ export default async function Home() {
             <li className="now-item">
               <span className="now-item__dot" aria-hidden="true"></span>
               <div>
-                <h3>Building SEORCE — an AI-powered SEO intelligence platform</h3>
+                <h3>Building SEORCE</h3>
                 <p>
-                  SEORCE is a platform that tracks, measures, and optimizes
-                  brand visibility across both traditional search engines
-                  (Google, Bing) and AI-powered search platforms (ChatGPT,
-                  Perplexity, Gemini). It helps brands understand how they
-                  appear in AI-generated answers — a discipline known as{" "}
-                  <strong>Generative Engine Optimization (GEO)</strong>.
+                  SEORCE helps brands see how they show up in Google, Bing, and
+                  AI search tools like ChatGPT, Perplexity, and Gemini. A big
+                  part of that is{" "}
+                  <strong>generative engine optimization (GEO)</strong>:
+                  whether and how you get mentioned in AI answers.
                 </p>
               </div>
             </li>
             <li className="now-item">
               <span className="now-item__dot" aria-hidden="true"></span>
               <div>
-                <h3>Studying technical SEO and AI-driven search</h3>
+                <h3>Learning technical SEO</h3>
                 <p>
-                  Deep-diving into crawl budget optimization, structured data
-                  markup, and how large language models retrieve, rank, and
-                  cite web content. Writing about every finding on the blog.
+                  Working through crawl budget, structured data, and how LLMs
+                  find and cite pages. I write up what I figure out on the blog.
                 </p>
               </div>
             </li>
             <li className="now-item">
               <span className="now-item__dot" aria-hidden="true"></span>
               <div>
-                <h3>Writing in public</h3>
+                <h3>Writing as I go</h3>
                 <p>
-                  Documenting the journey of learning SEO from scratch as a
-                  software engineer. Every post is a snapshot of what I am
-                  learning right now — no fluff, no pretending to have a
-                  decade of experience.
+                  Short posts on what I&apos;m learning about SEO from a
+                  software engineering background. Honest notes, not expert
+                  cosplay.
                 </p>
               </div>
             </li>
@@ -159,7 +146,7 @@ export default async function Home() {
           <div className="section__inner">
             <p className="eyebrow mono">// blog</p>
             <h2 className="section__title">
-              Latest articles on AI, SEO, and Generative Engine Optimization
+              Latest from the blog
             </h2>
             <div className="blog-grid">
               {latestPosts.map((post) => (
