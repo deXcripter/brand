@@ -42,14 +42,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
 
-
-
-
-
-        <Script
+       <Script
           src="https://cdn.exeolabs.xyz/script.js"
           strategy="afterInteractive"
-          data-site="f97bff69-c312-48c2-93c4-a3cfb81b3a5c"
+          data-site="334616476419637248"
         />
       </head>
       <body>
