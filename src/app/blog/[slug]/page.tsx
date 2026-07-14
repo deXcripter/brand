@@ -76,6 +76,8 @@ export default async function BlogPostPage({
 
   return (
     <div className="blog-layout section__inner">
+      <BlogOutline headings={headings} />
+
       <article className="blog-post">
         <script
           type="application/ld+json"
@@ -111,8 +113,6 @@ export default async function BlogPostPage({
           />
         ) : null}
       </article>
-
-      <BlogOutline headings={headings} />
     </div>
   );
 }
