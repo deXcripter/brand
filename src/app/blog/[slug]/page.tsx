@@ -90,14 +90,6 @@ export default async function BlogPostPage({
 
       <BlogContent html={getPostContent(post)} className="blog-post__body" />
 
-      {/* GEO: structured summary for AI extraction */}
-      <aside className="blog-post__tldr" aria-label="Key takeaways">
-        <h2 className="blog-post__tldr-title mono">// tldr</h2>
-        <p className="blog-post__tldr-text">
-          <strong>{post.title}</strong>. {post.subtitle}
-        </p>
-      </aside>
-
       {post.tags ? (
         <p
           className="blog-post__tags mono"

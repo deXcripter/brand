@@ -148,15 +148,95 @@ ul { list-style: none; margin: 0; padding: 0; }
 .nav__mark {
   display: inline-flex;
   align-items: center;
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  color: var(--text);
+  min-width: 0;
+  max-width: min(60vw, 28rem);
+}
+
+.nav__spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ============================================
+   PWD (current path)
+   ============================================ */
+.pwd {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: var(--fs-sm);
+  line-height: 1.2;
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pwd a {
+  color: var(--text-muted);
   transition: color var(--transition);
 }
-.nav__mark:hover {
+
+.pwd a:hover {
   color: var(--accent);
+}
+
+.pwd__home {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pwd__home:hover {
+  color: var(--accent);
+}
+
+.pwd__segment {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.pwd__slash {
+  color: var(--border);
+  margin: 0 0.05em;
+}
+
+.pwd__current {
+  color: var(--accent);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pwd--fixed {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 80;
+  max-width: min(70vw, 28rem);
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+@media (min-width: 801px) {
+  .pwd--dashboard {
+    left: calc(240px + var(--space-3));
+  }
+}
+
+.site {
+  padding-top: 0;
+}
+
+/* Leave room so the fixed pwd doesn't sit under nav controls */
+.site > .nav-shell {
+  padding-left: clamp(5.5rem, 18vw, 12rem);
 }
 
 .nav__right {
@@ -331,7 +411,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   .nav-shell {
     display: grid;
     grid-template-columns: 1fr auto auto;
-    grid-template-areas: "mark links toggle";
+    grid-template-areas: "spacer links toggle";
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-2) var(--space-4);
@@ -343,8 +423,8 @@ ul { list-style: none; margin: 0; padding: 0; }
     background: transparent;
   }
 
-  .nav__mark {
-    grid-area: mark;
+  .nav__spacer {
+    grid-area: spacer;
   }
 
   .nav__links {
@@ -1325,27 +1405,6 @@ ul { list-style: none; margin: 0; padding: 0; }
   margin-top: var(--space-5);
   padding-top: var(--space-3);
   border-top: 1px solid var(--border);
-}
-
-/* TL;DR — GEO-friendly structured summary */
-.blog-post__tldr {
-  margin-top: var(--space-5);
-  padding: var(--space-3);
-  background: var(--accent-soft);
-  border-radius: var(--radius);
-  border-left: 3px solid var(--accent);
-}
-.blog-post__tldr-title {
-  font-size: var(--fs-xs);
-  color: var(--accent);
-  margin-bottom: var(--space-1);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.blog-post__tldr-text {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.6;
 }
 
 /* Empty state for post list */

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 import RouteProgress from "@/components/route-progress";
+import Pwd from "@/components/pwd";
 
 export default function SiteChrome({
   children,
@@ -12,22 +13,24 @@ export default function SiteChrome({
 }) {
   const pathname = usePathname();
   const isDashboard = pathname.startsWith("/dashboard");
-
-  if (isDashboard) {
-    return (
-      <>
-        <RouteProgress />
-        {children}
-      </>
-    );
-  }
+  const isDashboardApp =
+    isDashboard && !pathname.startsWith("/dashboard/login");
 
   return (
-    <div className="site">
+    <>
       <RouteProgress />
-      <Nav />
-      {children}
-      <Footer />
-    </div>
+      <Pwd
+        className={`pwd--fixed${isDashboardApp ? " pwd--dashboard" : ""}`}
+      />
+      {isDashboard ? (
+        children
+      ) : (
+        <div className="site">
+          <Nav />
+          {children}
+          <Footer />
+        </div>
+      )}
+    </>
   );
 }

@@ -8,8 +8,8 @@ import ThemeToggle from "./theme-toggle";
 const links = [
   { href: "/", label: "home" },
   { href: "/chronicle", label: "chronicle" },
-  { href: "/gallery", label: "gallery" },
   { href: "/blog", label: "blog" },
+  { href: "/gallery", label: "gallery" },
 ];
 
 export default function Nav() {
@@ -44,9 +44,7 @@ export default function Nav() {
   return (
     <div className={`nav-shell${menuOpen ? " nav-shell--open" : ""}`}>
       <header className="nav">
-        <Link href="/" className="nav__mark mono" aria-label="Johnpaul Nnaji home">
-          JN
-        </Link>
+        <div className="nav__spacer" aria-hidden="true" />
         <div className="nav__right">
           <button
             type="button"
