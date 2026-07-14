@@ -1,4 +1,4 @@
-import { sanitizeBlogHtml } from "@/lib/blog-content";
+import { sanitizeBlogHtml, convertImagesToFigures } from "@/lib/blog-content";
 
 type BlogContentProps = {
   html: string;
@@ -6,7 +6,7 @@ type BlogContentProps = {
 };
 
 export default function BlogContent({ html, className = "" }: BlogContentProps) {
-  const safeHtml = sanitizeBlogHtml(html);
+  const safeHtml = convertImagesToFigures(sanitizeBlogHtml(html));
 
   return (
     <div

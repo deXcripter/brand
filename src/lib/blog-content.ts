@@ -119,3 +119,28 @@ export function annotateHeadings(html: string): {
 
   return { html: annotated, headings };
 }
+
+/** Convert standard img tags with captions into figure/figcaption wrappers for frontend rendering. */
+export function convertImagesToFigures(html: string): string {
+  return html.replace(/<img([^>]+)>/gi, (match, attrs) => {
+    const srcMatch = attrs.match(/src="([^"]+)"/i);
+    const altMatch = attrs.match(/alt="([^"]+)"/i);
+    const titleMatch = attrs.match(/title="([^"]+)"/i);
+    const classMatch = attrs.match(/class="([^"]+)"/i);
+
+    const src = srcMatch ? srcMatch[1] : "";
+    const alt = altMatch ? altMatch[1] : "";
+    const title = titleMatch ? titleMatch[1] : "";
+    const className = classMatch ? classMatch[1] : "";
+
+    const caption = title || alt;
+
+    // Only wrap in figure if there is a caption
+    if (!caption || caption.trim() === "") {
+      return match;
+    }
+
+    return `<figure class="blog-content__figure"><img src="${src}" alt="${alt}" class="${className}" loading="lazy" /><figcaption class="blog-content__caption">${caption}</figcaption></figure>`;
+  });
+}
+

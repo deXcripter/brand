@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor, NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -9,6 +9,31 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { uploadImage } from "@/lib/gallery";
 import { resolveMediaInHtml } from "@/lib/media-url";
+
+function ImageComponent({ node, updateAttributes, selected }: any) {
+  const { src, alt, title } = node.attrs;
+  return (
+    <NodeViewWrapper className={`blog-editor__image-wrapper ${selected ? "is-selected" : ""}`}>
+      <img src={src} alt={alt} title={title} className="blog-content__image" />
+      <input
+        type="text"
+        contentEditable={false}
+        className="blog-editor__image-caption-input mono"
+        placeholder="Type caption for image (optional)…"
+        value={alt || ""}
+        onChange={(e) => {
+          updateAttributes({ alt: e.target.value, title: e.target.value });
+        }}
+      />
+    </NodeViewWrapper>
+  );
+}
+
+const CustomImage = Image.extend({
+  addNodeView() {
+    return ReactNodeViewRenderer(ImageComponent);
+  },
+});
 
 type BlogEditorProps = {
   content: string;
@@ -47,7 +72,7 @@ export default function BlogEditor({
           target: "_blank",
         },
       }),
-      Image.configure({
+      CustomImage.configure({
         HTMLAttributes: {
           class: "blog-content__image",
           loading: "lazy",
