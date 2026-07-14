@@ -13,12 +13,21 @@ export default function SiteChrome({
   const pathname = usePathname();
   const isDashboard = pathname.startsWith("/dashboard");
 
+  if (isDashboard) {
+    return (
+      <>
+        <RouteProgress />
+        {children}
+      </>
+    );
+  }
+
   return (
-    <>
+    <div className="site">
       <RouteProgress />
-      {!isDashboard ? <Nav /> : null}
+      <Nav />
       {children}
-      {!isDashboard ? <Footer /> : null}
-    </>
+      <Footer />
+    </div>
   );
 }

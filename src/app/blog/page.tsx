@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     absolute: "Blog | Johnpaul Nnaji",
   },
   description:
-    "Notes on SEO, AI search, and building SEORCE. Written while learning, not after the fact.",
+    "Essays and notes on building, search, and the rest of life.",
   openGraph: {
     title: "Blog | Johnpaul Nnaji",
     description:
-      "Notes on SEO, AI search, and building SEORCE. Written while learning, not after the fact.",
+      "Essays and notes on building, search, and the rest of life.",
     type: "website",
   },
 };
@@ -27,11 +27,16 @@ export default async function BlogPage() {
       <section className="page-header">
         <div className="section__inner">
           <p className="eyebrow mono">// blog</p>
-          <h1 className="page-header__title">Writing as I learn</h1>
+          <h1 className="page-header__title">Journal</h1>
           <p className="page-header__sub">
-            Notes on SEO, AI search, and whatever I run into while building
-            SEORCE. I&apos;m learning this in public, so expect rough edges.
+            Essays and notes — some about building, some about being human.
+            Written when something needs saying.
           </p>
+          {posts.length > 0 ? (
+            <p className="page-header__meta mono">
+              {posts.length} {posts.length === 1 ? "entry" : "entries"}
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -50,7 +55,9 @@ export default async function BlogPage() {
                 <h2>{post.title}</h2>
                 <p>{post.subtitle}</p>
               </div>
-              <span className="post-row__arrow mono">→</span>
+              <span className="post-row__arrow mono" aria-hidden="true">
+                →
+              </span>
             </Link>
           ))
         )}
