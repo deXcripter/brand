@@ -2315,3 +2315,60 @@ ul { list-style: none; margin: 0; padding: 0; }
   .section { padding: var(--space-5) var(--space-2); }
   .hero { padding: var(--space-5) var(--space-2); min-height: 80vh; }
 }
+
+/* ============================================
+   EXPLORE HUB CARDS
+   ============================================ */
+.explore-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  min-height: 220px;
+}
+
+.explore-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.explore-card__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  z-index: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity var(--transition);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .explore-card__bg {
+  opacity: 0.16;
+}
+
+.explore-card:hover .explore-card__bg {
+  transform: scale(1.08);
+  opacity: 0.15;
+}
+
+[data-theme="dark"] .explore-card:hover .explore-card__bg {
+  opacity: 0.28;
+}
+
+.explore-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+}
+
