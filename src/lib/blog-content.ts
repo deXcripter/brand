@@ -32,7 +32,14 @@ const ALLOWED_ATTR = [
   "title",
   "class",
   "loading",
+  "id",
 ];
+
+export type BlogHeading = {
+  id: string;
+  text: string;
+  level: 2 | 3;
+};
 
 export function sanitizeBlogHtml(html: string): string {
   return DOMPurify.sanitize(html, {
@@ -61,4 +68,54 @@ export function excerptFromHtml(html: string, maxLength = 160): string {
 
   if (text.length <= maxLength) return text;
   return `${text.slice(0, maxLength).trim()}…`;
+}
+
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+function stripTags(html: string): string {
+  return html.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+}
+
+/** Inject stable ids onto h2/h3 and return the outline. */
+export function annotateHeadings(html: string): {
+  html: string;
+  headings: BlogHeading[];
+} {
+  const used = new Map<string, number>();
+  const headings: BlogHeading[] = [];
+
+  const annotated = html.replace(
+    /<(h[23])(\s[^>]*)?>([\s\S]*?)<\/\1>/gi,
+    (match, tag: string, attrs = "", inner: string) => {
+      const level = Number(tag.slice(1)) as 2 | 3;
+      const text = stripTags(inner);
+      if (!text) return match;
+
+      const existingId = attrs.match(/\bid=["']([^"']+)["']/i)?.[1];
+      let id =
+        existingId || slugifyHeading(text) || `section-${headings.length + 1}`;
+
+      const count = used.get(id) ?? 0;
+      used.set(id, count + 1);
+      if (count > 0) id = `${id}-${count + 1}`;
+
+      headings.push({ id, text, level });
+
+      if (existingId) {
+        return match.replace(/\bid=["'][^"']+["']/i, `id="${id}"`);
+      }
+
+      return `<${tag}${attrs} id="${id}">${inner}</${tag}>`;
+    }
+  );
+
+  return { html: annotated, headings };
 }

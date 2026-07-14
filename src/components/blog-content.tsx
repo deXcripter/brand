@@ -1,4 +1,3 @@
-import { resolveMediaInHtml } from "@/lib/media-url";
 import { sanitizeBlogHtml } from "@/lib/blog-content";
 
 type BlogContentProps = {
@@ -7,7 +6,7 @@ type BlogContentProps = {
 };
 
 export default function BlogContent({ html, className = "" }: BlogContentProps) {
-  const safeHtml = sanitizeBlogHtml(resolveMediaInHtml(html));
+  const safeHtml = sanitizeBlogHtml(html);
 
   return (
     <div
