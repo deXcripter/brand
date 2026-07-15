@@ -29,7 +29,7 @@ export default async function BlogPage() {
           <p className="eyebrow mono">// blog</p>
           <h1 className="page-header__title">Journal</h1>
           <p className="page-header__sub">
-            Essays and notes — some about building, some about being human.
+            Essays and notes - some about building, some about being human.
             Written when something needs saying.
           </p>
           {posts.length > 0 ? (

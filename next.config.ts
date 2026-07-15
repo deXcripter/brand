@@ -5,20 +5,23 @@ const apiBase = (
 ).replace(/\/api$/, "");
 
 const nextConfig: NextConfig = {
-  async redirects() {
-    return [
-      {
-        source: "/sitemaps.xml",
-        destination: "/sitemap.xml",
-        permanent: true,
-      },
-    ];
-  },
   async rewrites() {
     return [
       {
         source: "/api/media/:path*",
         destination: `${apiBase}/api/media/:path*`,
+      },
+      {
+        source: "/sitemap.xml",
+        destination: `${apiBase}/api/seo/sitemap.xml`,
+      },
+      {
+        source: "/sitemaps.xml",
+        destination: `${apiBase}/api/seo/sitemap.xml`,
+      },
+      {
+        source: "/robots.txt",
+        destination: `${apiBase}/api/seo/robots.txt`,
       },
     ];
   },
