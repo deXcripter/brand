@@ -54,6 +54,17 @@ export default function RootLayout({
           strategy="afterInteractive"
           data-site="334616476419637248"
         />
+
+        {/* Privacy-friendly analytics by Plausible */}
+        <Script
+          src="https://plausible.io/js/pa-mWVg99n-SGc-rg0JU2FGr.js"
+          strategy="afterInteractive"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`,
+          }}
+        />
       </head>
       <body>
         <ThemeProvider>
