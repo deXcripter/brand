@@ -42,6 +42,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
+        <link rel="preconnect" href="https://cdn.exeolabs.xyz" />
+        <link rel="preconnect" href="https://plausible.io" />
        <Script
           src="https://cdn.exeolabs.xyz/script.js"
           strategy="lazyOnload"

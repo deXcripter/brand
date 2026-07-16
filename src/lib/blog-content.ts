@@ -32,6 +32,9 @@ const ALLOWED_ATTR = [
   "title",
   "class",
   "loading",
+  "fetchpriority",
+  "width",
+  "height",
   "id",
 ];
 
@@ -122,25 +125,51 @@ export function annotateHeadings(html: string): {
 
 /** Convert standard img tags with captions into figure/figcaption wrappers for frontend rendering. */
 export function convertImagesToFigures(html: string): string {
+  let imageIndex = 0;
+
   return html.replace(/<img([^>]+)>/gi, (match, attrs) => {
     const srcMatch = attrs.match(/src="([^"]+)"/i);
-    const altMatch = attrs.match(/alt="([^"]+)"/i);
-    const titleMatch = attrs.match(/title="([^"]+)"/i);
-    const classMatch = attrs.match(/class="([^"]+)"/i);
+    const altMatch = attrs.match(/alt="([^"]*)"/i);
+    const titleMatch = attrs.match(/title="([^"]*)"/i);
+    const classMatch = attrs.match(/class="([^"]*)"/i);
+    const widthMatch = attrs.match(/width="([^"]+)"/i);
+    const heightMatch = attrs.match(/height="([^"]+)"/i);
+    const loadingMatch = attrs.match(/loading="([^"]+)"/i);
+    const fetchPriorityMatch = attrs.match(/fetchpriority="([^"]+)"/i);
 
     const src = srcMatch ? srcMatch[1] : "";
     const alt = altMatch ? altMatch[1] : "";
     const title = titleMatch ? titleMatch[1] : "";
     const className = classMatch ? classMatch[1] : "";
-
+    const existingWidth = widthMatch ? widthMatch[1] : "";
+    const existingHeight = heightMatch ? heightMatch[1] : "";
     const caption = title || alt;
+    const isFirstImage = imageIndex === 0;
+    imageIndex += 1;
 
-    // Only wrap in figure if there is a caption
+    const width = existingWidth;
+    const height = existingHeight;
+    const loading = loadingMatch?.[1] || (isFirstImage ? "eager" : "lazy");
+    const fetchPriority = fetchPriorityMatch?.[1] || (isFirstImage ? "high" : "auto");
+
+    const imageAttrs = [
+      `src="${src}"`,
+      `alt="${alt}"`,
+      className ? `class="${className}"` : null,
+      width ? `width="${width}"` : null,
+      height ? `height="${height}"` : null,
+      `loading="${loading}"`,
+      `fetchpriority="${fetchPriority}"`,
+      `decoding="async"`,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
     if (!caption || caption.trim() === "") {
-      return match;
+      return `<img ${imageAttrs}>`;
     }
 
-    return `<figure class="blog-content__figure"><img src="${src}" alt="${alt}" class="${className}" loading="lazy" /><figcaption class="blog-content__caption">${caption}</figcaption></figure>`;
+    return `<figure class="blog-content__figure"><img ${imageAttrs} /><figcaption class="blog-content__caption">${caption}</figcaption></figure>`;
   });
 }
 
