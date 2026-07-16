@@ -75,6 +75,7 @@ export default function RootLayout({
               name: "Johnpaul Nnaji",
               givenName: "Johnpaul",
               familyName: "Nnaji",
+              username: "dexcripter",
               url: "https://dexcripter.com",
               jobTitle: "Software Engineer",
               description:
