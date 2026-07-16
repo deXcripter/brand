@@ -13,7 +13,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
 export async function getPost(slug: string): Promise<BlogPost | undefined> {
   const response = await fetch(`${getApiUrl()}/posts/${slug}`, {
-    next: { revalidate: 60 },
+    cache: "no-store",
   });
 
   if (response.status === 404) {

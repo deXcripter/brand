@@ -48,8 +48,20 @@ export async function addBlogImageAttributes(html: string): Promise<string> {
   );
   const metaMap = new Map(entries);
   let imageIndex = 0;
+  let figureDepth = 0;
 
-  return html.replace(/<img([^>]+)>/gi, (match, attrs) => {
+  return html.replace(/<\/?(?:figure|img)([^>]*)>/gi, (match) => {
+    if (/^<figure\b/i.test(match)) {
+      figureDepth += 1;
+      return match;
+    }
+
+    if (/^<\/figure\b/i.test(match)) {
+      figureDepth = Math.max(0, figureDepth - 1);
+      return match;
+    }
+
+    const attrs = match.slice(4, -1);
     const srcMatch = attrs.match(/src="([^"]+)"/i);
     const altMatch = attrs.match(/alt="([^"]*)"/i);
     const titleMatch = attrs.match(/title="([^"]*)"/i);
@@ -87,7 +99,7 @@ export async function addBlogImageAttributes(html: string): Promise<string> {
 
     const caption = title || alt;
 
-    if (!caption || caption.trim() === "") {
+    if (figureDepth > 0 || !caption || caption.trim() === "") {
       return `<img ${imageAttrs}>`;
     }
 
