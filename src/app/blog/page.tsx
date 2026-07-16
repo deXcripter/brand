@@ -20,7 +20,12 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await getAllPosts();
+  let posts: Awaited<ReturnType<typeof getAllPosts>> = [];
+  try {
+    posts = await getAllPosts();
+  } catch {
+    // API unreachable — render empty state so the page doesn't crash
+  }
 
   return (
     <>

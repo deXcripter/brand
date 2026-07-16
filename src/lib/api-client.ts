@@ -67,7 +67,7 @@ export async function apiFetch<T>(
 
 export async function serverApiFetch<T>(path: string): Promise<T> {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000);
+  const timeout = setTimeout(() => controller.abort(), 15_000);
 
   try {
     const response = await fetch(`${getApiUrl()}${path}`, {
