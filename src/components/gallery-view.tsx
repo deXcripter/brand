@@ -27,7 +27,7 @@ export default function GalleryView({
   const [images, setImages] = useState<GalleryImage[]>(initialImages);
   const [hasMore, setHasMore] = useState(initialHasMore);
   const [loading, setLoading] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<"all" | "personal" | "random" | "events">("all");
+  const [activeCategory, setActiveCategory] = useState<"personal" | "random" | "events">("events");
   const [lightbox, setLightbox] = useState<{
     src: string;
     caption: string;
@@ -51,8 +51,7 @@ export default function GalleryView({
     setLoading(true);
     loadingRef.current = true;
 
-    const category = activeCategory === "all" ? undefined : activeCategory;
-    fetchGalleryBatch(undefined, undefined, category)
+    fetchGalleryBatch(undefined, undefined, activeCategory)
       .then((batch) => {
         setImages(batch.images);
         setHasMore(batch.hasMore);
@@ -73,8 +72,7 @@ export default function GalleryView({
 
     try {
       const last = images[images.length - 1];
-      const category = activeCategory === "all" ? undefined : activeCategory;
-      const batch = await fetchGalleryBatch(last?.date, last?.id, category);
+      const batch = await fetchGalleryBatch(last?.date, last?.id, activeCategory);
       setImages((prev) => [...prev, ...batch.images]);
       setHasMore(batch.hasMore);
     } catch {
@@ -110,10 +108,10 @@ export default function GalleryView({
         <nav className="category-tabs" aria-label="Gallery categories">
           <button
             type="button"
-            className={`category-tab${activeCategory === "all" ? " is-active" : ""}`}
-            onClick={() => setActiveCategory("all")}
+            className={`category-tab${activeCategory === "events" ? " is-active" : ""}`}
+            onClick={() => setActiveCategory("events")}
           >
-            All
+            Events
           </button>
           <button
             type="button"
@@ -121,13 +119,6 @@ export default function GalleryView({
             onClick={() => setActiveCategory("random")}
           >
             Random
-          </button>
-          <button
-            type="button"
-            className={`category-tab${activeCategory === "events" ? " is-active" : ""}`}
-            onClick={() => setActiveCategory("events")}
-          >
-            Events
           </button>
           <button
             type="button"

@@ -23,7 +23,7 @@ export default async function GalleryPage() {
   let hasMore = false;
 
   try {
-    const batch = await fetchGalleryBatch();
+    const batch = await fetchGalleryBatch(undefined, undefined, "events");
     images = batch.images;
     hasMore = batch.hasMore;
   } catch {

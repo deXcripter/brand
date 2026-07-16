@@ -29,7 +29,7 @@ export default function GalleryManager() {
   const [uploadDate, setUploadDate] = useState<GalleryDateValue>(
     getDefaultGalleryDate
   );
-  const [uploadCategory, setUploadCategory] = useState<string>("personal");
+  const [uploadCategory, setUploadCategory] = useState<string>("events");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -137,8 +137,8 @@ export default function GalleryManager() {
               value={uploadCategory}
               onChange={(e) => setUploadCategory(e.target.value)}
             >
-              <option value="random">Random</option>
               <option value="events">Events</option>
+              <option value="random">Random</option>
               <option value="personal">Personal</option>
             </select>
           </label>
@@ -260,8 +260,8 @@ function GalleryImageCard({
               void onSave(image.id, { category: event.target.value as any })
             }
           >
-            <option value="random">Random</option>
             <option value="events">Events</option>
+            <option value="random">Random</option>
             <option value="personal">Personal</option>
           </select>
         </label>

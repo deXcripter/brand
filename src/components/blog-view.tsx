@@ -15,15 +15,14 @@ function getFirstImage(html: string): string | null {
 }
 
 export default function BlogView({ initialPosts }: BlogViewProps) {
-  const [activeTab, setActiveTab] = useState<"all" | "search-ai" | "personal">("all");
+  const [activeTab, setActiveTab] = useState<"search-ai" | "personal">("search-ai");
   const [isPending, startTransition] = useTransition();
 
   const filteredPosts = initialPosts.filter((post) => {
-    if (activeTab === "all") return true;
     return post.category === activeTab;
   });
 
-  function handleTabChange(tab: "all" | "search-ai" | "personal") {
+  function handleTabChange(tab: "search-ai" | "personal") {
     startTransition(() => {
       setActiveTab(tab);
     });
@@ -35,13 +34,6 @@ export default function BlogView({ initialPosts }: BlogViewProps) {
       <aside className="blog-sidebar">
         <h2 className="blog-sidebar__title mono">// categories</h2>
         <nav className="blog-sidebar__nav" aria-label="Blog categories">
-          <button
-            type="button"
-            className={`blog-sidebar__tab${activeTab === "all" ? " is-active" : ""}`}
-            onClick={() => handleTabChange("all")}
-          >
-            All posts
-          </button>
           <button
             type="button"
             className={`blog-sidebar__tab${activeTab === "search-ai" ? " is-active" : ""}`}
