@@ -42,6 +42,7 @@ export default function PostEditor({ mode, initial }: PostEditorProps) {
   const [subtitle, setSubtitle] = useState(initial?.subtitle ?? "");
   const [date, setDate] = useState(initial?.date ?? defaultDate());
   const [tags, setTags] = useState(initial?.tags ?? "");
+  const [category, setCategory] = useState(initial?.category ?? "");
   const [content, setContent] = useState(() =>
     initial ? getPostContent(initial) : "<p></p>"
   );
@@ -75,6 +76,13 @@ export default function PostEditor({ mode, initial }: PostEditorProps) {
       return;
     }
 
+    if (!category) {
+      setError("Please select a category.");
+      setShowSettings(true);
+      setLoading(false);
+      return;
+    }
+
     const payload = {
       title: title.trim(),
       slug: slug.trim() || undefined,
@@ -83,6 +91,7 @@ export default function PostEditor({ mode, initial }: PostEditorProps) {
       tags,
       content: normalizeMediaInHtml(content),
       published,
+      category,
     };
 
     try {
@@ -152,15 +161,16 @@ export default function PostEditor({ mode, initial }: PostEditorProps) {
         <section className="post-editor__settings dashboard-panel">
           <div className="dashboard-form__grid">
             <label className="dashboard-field">
-              <span className="dashboard-field__label mono">Slug</span>
-              <input
-                value={slug}
-                onChange={(event) => {
-                  setSlugTouched(true);
-                  setSlug(event.target.value);
-                }}
-                placeholder="auto-generated from title"
-              />
+              <span className="dashboard-field__label mono">Category</span>
+              <select
+                value={category}
+                onChange={(event) => setCategory(event.target.value)}
+                required
+              >
+                <option value="" disabled>Select category...</option>
+                <option value="search-ai">Search & AI</option>
+                <option value="personal">Personal</option>
+              </select>
             </label>
             <label className="dashboard-field">
               <span className="dashboard-field__label mono">Date</span>
@@ -172,7 +182,18 @@ export default function PostEditor({ mode, initial }: PostEditorProps) {
                 }
               />
             </label>
-            <label className="dashboard-field dashboard-field--full">
+            <label className="dashboard-field">
+              <span className="dashboard-field__label mono">Slug</span>
+              <input
+                value={slug}
+                onChange={(event) => {
+                  setSlugTouched(true);
+                  setSlug(event.target.value);
+                }}
+                placeholder="auto-generated from title"
+              />
+            </label>
+            <label className="dashboard-field">
               <span className="dashboard-field__label mono">Tags</span>
               <input
                 value={tags}
@@ -180,7 +201,7 @@ export default function PostEditor({ mode, initial }: PostEditorProps) {
                 placeholder="ai, seo, engineering"
               />
             </label>
-            <label className="dashboard-field dashboard-field--checkbox">
+            <label className="dashboard-field dashboard-field--checkbox dashboard-field--full">
               <input
                 type="checkbox"
                 checked={published}

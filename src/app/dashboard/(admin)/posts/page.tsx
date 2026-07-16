@@ -54,11 +54,16 @@ export default function DashboardPostsPage() {
           {posts.map((post) => (
             <article className="post-admin-card" key={post.slug}>
               <div className="post-admin-card__header">
-                <span
-                  className={`post-admin-card__status${post.published ? " is-live" : ""}`}
-                >
-                  {post.published ? "Published" : "Draft"}
-                </span>
+                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                  <span
+                    className={`post-admin-card__status${post.published ? " is-live" : ""}`}
+                  >
+                    {post.published ? "Published" : "Draft"}
+                  </span>
+                  <span className="post-admin-card__category-badge mono">
+                    {post.category === "search-ai" ? "Search & AI" : "Personal"}
+                  </span>
+                </div>
                 <span className="post-admin-card__date mono">{post.date}</span>
               </div>
               <h2 className="post-admin-card__title">{post.title}</h2>

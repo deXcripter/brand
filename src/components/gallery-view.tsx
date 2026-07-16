@@ -27,6 +27,7 @@ export default function GalleryView({
   const [images, setImages] = useState<GalleryImage[]>(initialImages);
   const [hasMore, setHasMore] = useState(initialHasMore);
   const [loading, setLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<"all" | "personal" | "random" | "events">("all");
   const [lightbox, setLightbox] = useState<{
     src: string;
     caption: string;
@@ -35,8 +36,35 @@ export default function GalleryView({
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   const loadingRef = useRef(false);
+  const isInitialMount = useRef(true);
 
   const close = () => setLightbox(null);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    setImages([]);
+    setHasMore(true);
+    setLoading(true);
+    loadingRef.current = true;
+
+    const category = activeCategory === "all" ? undefined : activeCategory;
+    fetchGalleryBatch(undefined, undefined, category)
+      .then((batch) => {
+        setImages(batch.images);
+        setHasMore(batch.hasMore);
+      })
+      .catch(() => {
+        setHasMore(false);
+      })
+      .finally(() => {
+        setLoading(false);
+        loadingRef.current = false;
+      });
+  }, [activeCategory]);
 
   const loadMore = useCallback(async () => {
     if (loadingRef.current || !hasMore) return;
@@ -45,7 +73,8 @@ export default function GalleryView({
 
     try {
       const last = images[images.length - 1];
-      const batch = await fetchGalleryBatch(last?.date, last?.id);
+      const category = activeCategory === "all" ? undefined : activeCategory;
+      const batch = await fetchGalleryBatch(last?.date, last?.id, category);
       setImages((prev) => [...prev, ...batch.images]);
       setHasMore(batch.hasMore);
     } catch {
@@ -54,7 +83,7 @@ export default function GalleryView({
       loadingRef.current = false;
       setLoading(false);
     }
-  }, [hasMore, images]);
+  }, [hasMore, images, activeCategory]);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -77,15 +106,51 @@ export default function GalleryView({
 
   return (
     <>
+      <div className="section__inner" style={{ paddingTop: 0 }}>
+        <nav className="category-tabs" aria-label="Gallery categories">
+          <button
+            type="button"
+            className={`category-tab${activeCategory === "all" ? " is-active" : ""}`}
+            onClick={() => setActiveCategory("all")}
+          >
+            All
+          </button>
+          <button
+            type="button"
+            className={`category-tab${activeCategory === "random" ? " is-active" : ""}`}
+            onClick={() => setActiveCategory("random")}
+          >
+            Random
+          </button>
+          <button
+            type="button"
+            className={`category-tab${activeCategory === "events" ? " is-active" : ""}`}
+            onClick={() => setActiveCategory("events")}
+          >
+            Events
+          </button>
+          <button
+            type="button"
+            className={`category-tab${activeCategory === "personal" ? " is-active" : ""}`}
+            onClick={() => setActiveCategory("personal")}
+          >
+            Personal
+          </button>
+        </nav>
+      </div>
+
       <section className="timeline section__inner">
         {Array.from(groups.entries()).map(([month, monthImages]) => (
-          <div className="timeline__group" key={month}>
+          <div className="timeline__group" key={`${activeCategory}-${month}`}>
             <h2 className="timeline__date mono">{month}</h2>
             <div className="gallery-grid">
-              {monthImages.map((img) => (
+              {monthImages.map((img, index) => (
                 <button
-                  key={img.id}
-                  className={`gallery-item${img.wide ? " gallery-item--wide" : ""}${img.tall ? " gallery-item--tall" : ""}`}
+                  key={`${activeCategory}-${img.id}`}
+                  className={`gallery-item animate-fade-in${img.wide ? " gallery-item--wide" : ""}${img.tall ? " gallery-item--tall" : ""}`}
+                  style={{
+                    animationDelay: `${index * 30}ms`,
+                  }}
                   onClick={() =>
                     setLightbox({
                       src: resolveMediaUrl(img.full),

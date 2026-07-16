@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
+import BlogView from "@/components/blog-view";
 
 /** ISR: revalidate every 60 seconds so new posts appear without a full redeploy. */
 export const revalidate = 60;
@@ -45,28 +45,7 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      <section className="post-list section__inner">
-        {posts.length === 0 ? (
-          <p className="post-list__empty">No posts yet. Check back soon.</p>
-        ) : (
-          posts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="post-row"
-            >
-              <span className="post-row__date mono">{post.date}</span>
-              <div className="post-row__body">
-                <h2>{post.title}</h2>
-                <p>{post.subtitle}</p>
-              </div>
-              <span className="post-row__arrow mono" aria-hidden="true">
-                →
-              </span>
-            </Link>
-          ))
-        )}
-      </section>
+      <BlogView initialPosts={posts} />
     </>
   );
 }

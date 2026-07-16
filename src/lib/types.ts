@@ -7,6 +7,7 @@ export interface BlogPost {
   content: string;
   body?: string[];
   published: boolean;
+  category: "personal" | "search-ai";
   /** Custom meta description from the backend. Falls back to auto-generated excerpt. */
   metaDescription?: string;
 }
@@ -20,6 +21,7 @@ export interface GalleryImage {
   caption: string;
   wide?: boolean;
   tall?: boolean;
+  category?: "personal" | "random" | "events";
 }
 
 export interface GalleryGroup {
@@ -54,6 +56,7 @@ export type CreateBlogPostInput = {
   date?: string;
   tags?: string;
   published?: boolean;
+  category?: string;
 };
 
 export type UpdateBlogPostInput = Partial<CreateBlogPostInput> & {
@@ -68,8 +71,9 @@ export type CreateGalleryImageInput = {
   date: string;
   wide?: boolean;
   tall?: boolean;
+  category?: string;
 };
 
 export type UpdateGalleryImageInput = Partial<
-  Pick<GalleryImage, "alt" | "caption" | "date" | "wide" | "tall">
+  Pick<GalleryImage, "alt" | "caption" | "date" | "wide" | "tall" | "category">
 >;

@@ -29,6 +29,7 @@ export default function GalleryManager() {
   const [uploadDate, setUploadDate] = useState<GalleryDateValue>(
     getDefaultGalleryDate
   );
+  const [uploadCategory, setUploadCategory] = useState<string>("personal");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -69,6 +70,7 @@ export default function GalleryManager() {
           alt,
           caption: alt,
           date: galleryDateToISO(uploadDate),
+          category: uploadCategory,
         });
         setImages((current) => [image, ...current]);
       }
@@ -127,6 +129,20 @@ export default function GalleryManager() {
         </div>
 
         <GalleryDatePicker value={uploadDate} onChange={setUploadDate} />
+
+        <div className="gallery-upload__category" style={{ margin: "var(--space-2) 0 var(--space-3)" }}>
+          <label className="dashboard-field">
+            <span className="dashboard-field__label mono">Category</span>
+            <select
+              value={uploadCategory}
+              onChange={(e) => setUploadCategory(e.target.value)}
+            >
+              <option value="random">Random</option>
+              <option value="events">Events</option>
+              <option value="personal">Personal</option>
+            </select>
+          </label>
+        </div>
 
         <div
           className={`gallery-upload__dropzone${dragging ? " is-dragging" : ""}${uploading ? " is-uploading" : ""}`}
@@ -235,6 +251,19 @@ function GalleryImageCard({
               onSave(image.id, { caption: event.target.value })
             }
           />
+        </label>
+        <label className="dashboard-gallery__field">
+          <span className="mono">Category</span>
+          <select
+            value={image.category ?? "personal"}
+            onChange={(event) =>
+              void onSave(image.id, { category: event.target.value as any })
+            }
+          >
+            <option value="random">Random</option>
+            <option value="events">Events</option>
+            <option value="personal">Personal</option>
+          </select>
         </label>
 
         <GalleryDatePicker

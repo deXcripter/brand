@@ -35,11 +35,13 @@ export async function getGalleryGroups(): Promise<GalleryGroup[]> {
 /** Fetch the next page of gallery images (client-side, cursor-based). */
 export async function fetchGalleryBatch(
   cursorDate?: string,
-  cursorId?: string
+  cursorId?: string,
+  category?: string
 ): Promise<PaginatedGalleryResponse> {
   const params = new URLSearchParams();
   if (cursorDate) params.set("cursorDate", cursorDate);
   if (cursorId) params.set("cursorId", cursorId);
+  if (category) params.set("category", category);
 
   const qs = params.toString();
   const url = `${getApiUrl()}/gallery${qs ? `?${qs}` : ""}`;
