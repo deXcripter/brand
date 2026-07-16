@@ -2538,15 +2538,20 @@ ul { list-style: none; margin: 0; padding: 0; }
 .blog-page-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-5);
+  gap: var(--space-4);
   align-items: start;
+  max-width: 1080px;
 }
 
 @media (min-width: 769px) {
   .blog-page-layout {
-    grid-template-columns: 200px 1fr;
-    gap: var(--space-6);
+    grid-template-columns: 160px 1fr;
+    gap: var(--space-5);
   }
+}
+
+.blog-page-header .section__inner {
+  max-width: 1080px;
 }
 
 /* Sidebar styles */

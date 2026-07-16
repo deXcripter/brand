@@ -29,7 +29,7 @@ export default async function BlogPage() {
 
   return (
     <>
-      <section className="page-header">
+      <section className="page-header blog-page-header">
         <div className="section__inner">
           <p className="eyebrow mono">// blog</p>
           <h1 className="page-header__title">Journal</h1>
