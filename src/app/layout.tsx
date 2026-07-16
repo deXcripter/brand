@@ -14,7 +14,7 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
@@ -42,23 +42,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-
        <Script
           src="https://cdn.exeolabs.xyz/script.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           data-site="334616476419637248"
         />
 
         {/* Privacy-friendly analytics by Plausible */}
         <Script
           src="https://plausible.io/js/pa-mWVg99n-SGc-rg0JU2FGr.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <script
           dangerouslySetInnerHTML={{

@@ -62,7 +62,7 @@ export default async function Home() {
 
           <div className="blog-grid" style={{ marginTop: "var(--space-4)" }}>
             <Link href="/about" className="explore-card">
-              <div className="explore-card__bg" style={{ backgroundImage: "url('/about_bg.png')" }} />
+              <div className="explore-card__bg" style={{ backgroundImage: "url('/about_bg.webp')" }} />
               <div className="explore-card__content">
                 {/* <span className="blog-card__date mono">// about</span> */}
                 <h3>About Me</h3>
@@ -77,7 +77,7 @@ export default async function Home() {
             </Link>
 
             <Link href="/chronicle" className="explore-card">
-              <div className="explore-card__bg" style={{ backgroundImage: "url('/journey_bg.png')" }} />
+              <div className="explore-card__bg" style={{ backgroundImage: "url('/journey_bg.webp')" }} />
               <div className="explore-card__content">
                 {/* <span className="blog-card__date mono">// chronicle</span> */}
                 <h3>My Journey</h3>
@@ -92,7 +92,7 @@ export default async function Home() {
             </Link>
 
             <Link href="/gallery" className="explore-card">
-              <div className="explore-card__bg" style={{ backgroundImage: "url('/gallery_bg.png')" }} />
+              <div className="explore-card__bg" style={{ backgroundImage: "url('/gallery_bg.webp')" }} />
               <div className="explore-card__content">
                 {/* <span className="blog-card__date mono">// gallery</span> */}
                 <h3>Gallery</h3>
