@@ -44,7 +44,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://cdn.exeolabs.xyz" />
         <link rel="preconnect" href="https://plausible.io" />
-       <Script
+        <Script
           src="https://cdn.exeolabs.xyz/script.js"
           strategy="lazyOnload"
           data-site="334616476419637248"
@@ -78,7 +78,7 @@ export default function RootLayout({
               givenName: "Johnpaul",
               familyName: "Nnaji",
               username: "dexcripter",
-              url: "https://dexcripter.com",
+              url: "https://dexcripter.me",
               jobTitle: "Software Engineer",
               description:
                 "Software engineer building AI tools for search visibility. Currently working on SEORCE.",
