@@ -91,7 +91,7 @@ export default async function BlogPostPage({
               author: {
                 "@type": "Person",
                 name: "Johnpaul Nnaji",
-                url: "https://dexcripter.com",
+                url: "https://dexcripter.me",
               },
             }),
           }}
