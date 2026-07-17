@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { EditorContent, useEditor, NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
+import { EditorContent, useEditor, NodeViewWrapper, ReactNodeViewRenderer, type NodeViewProps } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -10,10 +10,19 @@ import Underline from "@tiptap/extension-underline";
 import { uploadImage } from "@/lib/gallery";
 import { resolveMediaInHtml } from "@/lib/media-url";
 
-function ImageComponent({ node, updateAttributes, selected }: any) {
-  const { src, alt, title } = node.attrs;
+// ─── Image Node View ─────────────────────────────────────────────────────────
+
+function ImageComponent({ node, updateAttributes, selected }: NodeViewProps) {
+  const { src, alt, title } = node.attrs as {
+    src: string;
+    alt?: string;
+    title?: string;
+  };
   return (
-    <NodeViewWrapper className={`blog-editor__image-wrapper ${selected ? "is-selected" : ""}`}>
+    <NodeViewWrapper
+      className={`blog-editor__image-wrapper ${selected ? "is-selected" : ""}`}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} alt={alt} title={title} className="blog-content__image" />
       <input
         type="text"
@@ -34,6 +43,8 @@ const CustomImage = Image.extend({
     return ReactNodeViewRenderer(ImageComponent);
   },
 });
+
+// ─── Blog Editor ─────────────────────────────────────────────────────────────
 
 type BlogEditorProps = {
   content: string;
@@ -130,13 +141,11 @@ export default function BlogEditor({
       try {
         const { url } = await uploadImage(file);
         const alt = file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
-        editor
-          .chain()
-          .focus()
-          .setImage({ src: url, alt, title: alt })
-          .run();
+        editor.chain().focus().setImage({ src: url, alt, title: alt }).run();
       } catch (err) {
-        setUploadError(err instanceof Error ? err.message : "Image upload failed");
+        setUploadError(
+          err instanceof Error ? err.message : "Image upload failed"
+        );
       } finally {
         setUploading(false);
         if (fileInputRef.current) {
@@ -288,9 +297,11 @@ export default function BlogEditor({
       <EditorContent editor={editor} />
 
       <p className="blog-editor__hint mono">
-        Drag, paste, or use Image to embed anywhere in your post.
+        Drag, paste, or use Image to embed anywhere in your post. Use <kbd>&lt;/&gt;</kbd> to insert a code block. To specify language highlighting, make the first line of your code block look like `#javascript` or `#typescript`.
       </p>
-      {uploadError ? <p className="dashboard-form__error">{uploadError}</p> : null}
+      {uploadError ? (
+        <p className="dashboard-form__error">{uploadError}</p>
+      ) : null}
     </div>
   );
 }

@@ -29,16 +29,16 @@ export default async function BlogPage() {
 
   return (
     <>
-      <section className="page-header blog-page-header">
-        <div className="section__inner">
+      <section className="blog-hero-header">
+        <div className="blog-hero-header__inner">
           <p className="eyebrow mono">// blog</p>
-          <h1 className="page-header__title">Journal</h1>
-          <p className="page-header__sub">
-            Essays and notes - some about building, some about being human.
+          <h1 className="blog-hero-header__title">Journal</h1>
+          <p className="blog-hero-header__sub">
+            Essays and notes — some about building, some about being human.
             Written when something needs saying.
           </p>
           {posts.length > 0 ? (
-            <p className="page-header__meta mono">
+            <p className="blog-hero-header__count mono">
               {posts.length} {posts.length === 1 ? "entry" : "entries"}
             </p>
           ) : null}
