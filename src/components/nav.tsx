@@ -31,7 +31,7 @@ export default function Nav() {
       <header className="simple-nav" role="banner">
         {/* Left: Brand/Logo in terminal style */}
         <Link href="/" className="simple-nav__logo mono">
-          jp<span className="simple-nav__prompt">_</span>
+          de<span className="simple-nav__logo-x">X</span>cripter<span className="simple-nav__prompt">_</span>
         </Link>
 
         {/* Right: Navigation Links */}
