@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./theme-toggle";
@@ -26,67 +26,82 @@ export default function Nav() {
     setMenuOpen(false);
   }, [pathname]);
 
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
-
   return (
-    <div className={`nav-shell${menuOpen ? " nav-shell--open" : ""}`}>
-      <header className="nav">
-        <div className="nav__spacer" aria-hidden="true" />
-        <div className="nav__right">
+    <div className={`simple-nav-shell${menuOpen ? " simple-nav--open" : ""}`}>
+      <header className="simple-nav" role="banner">
+        {/* Left: Brand/Logo in terminal style */}
+        <Link href="/" className="simple-nav__logo mono">
+          jp<span className="simple-nav__prompt">_</span>
+        </Link>
+
+        {/* Right: Navigation Links */}
+        <div className="simple-nav__controls">
+          <nav className="simple-nav__links" aria-label="Main Navigation">
+            {links.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`simple-nav__link mono${active ? " is-active" : ""}`}
+                >
+                  <span className="simple-nav__link-prefix">~/</span>
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <ThemeToggle />
+
+          {/* Mobile menu button */}
           <button
             type="button"
-            className="nav__menu-btn"
+            className="simple-nav__menu-btn"
             aria-expanded={menuOpen}
-            aria-controls="nav-menu"
+            aria-controls="simple-nav-mobile"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            onClick={() => setMenuOpen((open) => !open)}
+            onClick={() => setMenuOpen((o) => !o)}
           >
-            <span className="nav__menu-icon" aria-hidden="true">
+            <span className="simple-nav__menu-icon">
               <span />
               <span />
               <span />
             </span>
           </button>
-          <ThemeToggle />
         </div>
       </header>
 
-      {menuOpen ? (
+      {/* Mobile backdrop */}
+      {menuOpen && (
         <button
           type="button"
-          className="nav__backdrop"
+          className="simple-nav__backdrop"
           aria-label="Close menu"
           onClick={() => setMenuOpen(false)}
         />
-      ) : null}
+      )}
 
-      <nav className="nav__links" id="nav-menu" aria-label="Main">
-        {links.map((link, i) => (
-          <Fragment key={link.href}>
-            {i > 0 && <span className="nav__slash">/</span>}
+      {/* Mobile menu drawer */}
+      <nav
+        className="simple-nav__mobile-menu"
+        id="simple-nav-mobile"
+        aria-label="Mobile Navigation"
+      >
+        {links.map((link) => {
+          const active = isActive(link.href);
+          return (
             <Link
+              key={link.href}
               href={link.href}
-              className={isActive(link.href) ? "is-active" : ""}
+              className={`simple-nav__mobile-link mono${active ? " is-active" : ""}`}
               onClick={() => setMenuOpen(false)}
             >
-              {link.label}
+              <span className="simple-nav__mobile-prefix">{active ? "❯" : " "}</span>
+              <span>{link.label}</span>
             </Link>
-          </Fragment>
-        ))}
+          );
+        })}
       </nav>
     </div>
   );

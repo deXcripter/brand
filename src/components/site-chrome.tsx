@@ -19,9 +19,10 @@ export default function SiteChrome({
   return (
     <>
       <RouteProgress />
-      <Pwd
-        className={`pwd--fixed${isDashboardApp ? " pwd--dashboard" : ""}`}
-      />
+      {/* Only show the floating breadcrumb Pwd on dashboard pages */}
+      {isDashboardApp && (
+        <Pwd className="pwd--fixed pwd--dashboard" />
+      )}
       {isDashboard ? (
         children
       ) : (
