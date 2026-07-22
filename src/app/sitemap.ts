@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 
-const SITE_URL = "https://dexcripter.me";
+const SITE_URL = "https://www.dexcripter.me";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = [
